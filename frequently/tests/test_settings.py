@@ -22,7 +22,7 @@ STATICFILES_DIRS = (
 )
 
 TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), '../templates'),
+    os.path.join(os.path.dirname(__file__), 'test_app/templates'),
 )
 
 COVERAGE_REPORT_HTML_OUTPUT_DIR = os.path.join(
