@@ -1,0 +1,7 @@
+*.egg-info/
+*.pyc
+/media/
+db.sqlite
+dist/
+docs/build/
+frequently/tests/coverage/

@@ -1,0 +1,9 @@
+# TODO add current versions with ==
+django==1.4.1
+fabric
+factory_boy
+django-nose
+coverage
+django-coverage
+mock
+selenium
