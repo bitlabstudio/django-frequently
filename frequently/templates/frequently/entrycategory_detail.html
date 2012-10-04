@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1>{{ object.name }}</h1>
+<div>
+    {% for entry in object.get_entries %}
+    {% include "frequently/partials/entry.html" %}
+    {% endfor %}
+</div>
+{% endblock %}

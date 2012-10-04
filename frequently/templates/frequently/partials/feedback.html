@@ -1,0 +1,19 @@
+{% load i18n %}
+<form method="post" action=".">
+    {% csrf_token %}
+    <input type="submit" name="up{{ entry.pk }}" value="{% trans "Appreciate" %}" />
+</form>
+{% if depreciate == entry.pk %}
+<form method="post" action=".">
+    {% csrf_token %}
+    <h2>{% trans "Depreciate" %}</h2>
+    <p>{% trans "Please give us a hint, why you want to depreciate this entry. Thank you!" %}</p>
+    <textarea name="remark"></textarea>
+    <input type="submit" name="down{{ entry.pk }}" value="{% trans "Send feedback" %}" />
+</form>
+{% else %}
+<form method="get" action=".">
+    {% csrf_token %}
+    <input type="submit" name="down{{ entry.pk }}" value="{% trans "Depreciate" %}" />
+</form>
+{% endif %}
