@@ -51,8 +51,9 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
         data = {
             'up1': 'Foo',
         }
-        resp = self.client.post(reverse('frequently:category_list'), data=data)
-        self.assertEqual(len(Entry.objects.get(pk=self.entry_1.pk).feedback_set.all()), 1)
+        self.client.post(reverse('frequently:category_list'), data=data)
+        self.assertEqual(len(Entry.objects.get(
+            pk=self.entry_1.pk).feedback_set.all()), 1)
 
 
 class CategoryDetailViewTestCase(ViewTestMixin, TestCase):
