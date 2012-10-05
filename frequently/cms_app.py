@@ -11,4 +11,5 @@ class BlogApphook(CMSApp):
     name = _("Frequently App")
     urls = ["frequently.urls"]
 
+
 apphook_pool.register(BlogApphook)

@@ -1,8 +1,8 @@
 {% load i18n %}
 {% load url from future %}
 <p>
-    <strong><a href="{% url "frequently:entry_detail" pk=entry.pk slug=entry.slug %}">{{ entry.question }}</a></strong>
+    <strong><a href="{% url "frequently_entry_detail" pk=entry.pk slug=entry.slug %}">{{ entry.question }}</a></strong>
 </p>
-<p>{% trans "Rating" %}: {{ entry.votes }}</p>
+<p>{% trans "Rating" %}: {{ entry.rating }}</p>
 <p>{{ entry.answer }}</p>
 {% include "frequently/partials/feedback.html" with object=entry %}

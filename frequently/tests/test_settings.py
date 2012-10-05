@@ -4,6 +4,7 @@ import os
 
 PROJECT_ROOT = os.path.dirname(__file__)
 
+USE_TZ = True
 
 DATABASES = {
     'default': {

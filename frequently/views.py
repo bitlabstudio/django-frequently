@@ -32,7 +32,7 @@ class FeedbackMixin(object):
         for key in self.request.POST.keys():
             if key.startswith('up'):
                 entry = Entry.objects.get(pk=key.replace('up', ''))
-                entry.votes += 1
+                entry.upvotes += 1
                 feedback.entry = entry
                 feedback.validation = "P"
                 entry.save()
@@ -40,7 +40,7 @@ class FeedbackMixin(object):
                 break
             elif key.startswith('down'):
                 entry = Entry.objects.get(pk=key.replace('down', ''))
-                entry.votes -= 1
+                entry.downvotes -= 1
                 feedback.entry = entry
                 feedback.validation = "N"
                 feedback.remark = request.POST.get("remark")
@@ -60,22 +60,22 @@ class EntryCategoryListView(FeedbackMixin, ListView):
 
     def get_queryset(self):
         """
-        Custom ordering. First we get the average views and votes for
+        Custom ordering. First we get the average views and rating for
         the categories's entries. Second we created a rank by multiplying
         both. Last, we sort categories by this rank from top to bottom.
 
         Example:
         - Cat_1
-            - Entry_1 (500 Views, Vote status 2)
-            - Entry_2 (200 Views, Vote status -4)
-            - Entry_3 (100 Views, Vote status 3)
+            - Entry_1 (500 Views, Rating 2)
+            - Entry_2 (200 Views, Rating -4)
+            - Entry_3 (100 Views, Rating 3)
         - Cat_2
-            - Entry_1 (200 Views, Vote status 7)
-            - Entry_2 (50 Views, Vote status 2)
+            - Entry_1 (200 Views, Rating 7)
+            - Entry_2 (50 Views, Rating 2)
 
         Result:
-        Cat_1 has a rank by: 88.88 (average views: 266.66, average votes: 0.33)
-        Cat_2 has a rank by: 562.5 (average views: 125, average votes: 4.5)
+        Cat_1 has a rank by: 88.88 (avg. views: 266.66, avg. rating: 0.33)
+        Cat_2 has a rank by: 562.5 (avg. views: 125, avg. rating: 4.5)
 
         Cat_2 will be displayed at the top. The algorithm is quality-oriented,
         as you can see.
@@ -87,10 +87,10 @@ class EntryCategoryListView(FeedbackMixin, ListView):
                 entries = category.get_entries()
                 if entries:
                     amount_list = [e.amount_of_views for e in entries]
-                    votes_list = [e.votes for e in entries]
+                    rating_list = [e.rating() for e in entries]
                     views_per_entry = fsum(amount_list) / len(amount_list)
-                    votes_per_entry = fsum(votes_list) / len(votes_list)
-                    category.last_rank = views_per_entry * votes_per_entry
+                    rating_per_entry = fsum(rating_list) / len(rating_list)
+                    category.last_rank = views_per_entry * rating_per_entry
                     category.save()
                 else:
                     self.queryset = self.queryset.exclude(pk=category.pk)
@@ -138,4 +138,4 @@ class EntryCreateView(CreateView):
         return kwargs
 
     def get_success_url(self):
-        return reverse('frequently:category_list')
+        return reverse('frequently_category_list')

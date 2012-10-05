@@ -14,6 +14,7 @@ class EntryCategory(models.Model):
 
     :name: Name or title of the category.
     :slug: Slugified name of the category.
+    :last_rank: Last rank calculated at the category list view.
 
     """
     name = models.CharField(max_length=100)
@@ -44,14 +45,15 @@ class Entry(models.Model):
     Entry model. Can be added to a category group.
 
     :owner: Foreign key to django auth user.
-    :category: entry can appear in different categories.
+    :category: Entry can appear in different categories.
     :question: Title or question of the entry.
     :slug: Slugified question of the category.
     :answer: Answer or content of the entry.
     :creation_date: Date of entry creation.
     :last_view_date: Date of the last click/view.
     :amount_of_views: Amount of views/clicks.
-    :votes: Vote account for this entry.
+    :upvotes: Positive vote account for this entry.
+    :downvotes: Negative vote account for this entry.
     :published: Shows/hides entries.
 
     """
@@ -94,9 +96,14 @@ class Entry(models.Model):
         verbose_name=_('Amount of views'),
     )
 
-    votes = models.IntegerField(
+    upvotes = models.PositiveIntegerField(
         default=0,
-        verbose_name=_('Votes'),
+        verbose_name=_('Upvotes'),
+    )
+
+    downvotes = models.PositiveIntegerField(
+        default=0,
+        verbose_name=_('Downvotes'),
     )
 
     published = models.BooleanField(
@@ -114,10 +121,14 @@ class Entry(models.Model):
         self.slug = slugify(self.question)
         return super(Entry, self).save(*args, **kwargs)
 
+    def rating(self):
+        return self.upvotes - self.downvotes
+
 
 class Feedback(models.Model):
     """
     Feedback model to save and store user feedback related to an entry.
+
     This model can also be used to store general feedback.
 
     :user: Stores user if authenticated at submission.

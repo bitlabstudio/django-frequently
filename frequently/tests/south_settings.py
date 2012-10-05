@@ -19,6 +19,4 @@ DATABASES = {
     }
 }
 
-USE_TZ = True
-
 INSTALLED_APPS.append('south', )

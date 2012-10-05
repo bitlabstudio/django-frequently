@@ -22,11 +22,12 @@ class EntryForm(forms.ModelForm):
             'creation_date',
             'last_view_date',
             'amount_of_views',
-            'votes',
+            'upvotes',
+            'downvotes',
             'published',
         )
 
-    def __init__(self, owner=False, *args, **kwargs):
+    def __init__(self, owner=None, *args, **kwargs):
         self.owner = owner
         super(EntryForm, self).__init__(*args, **kwargs)
 

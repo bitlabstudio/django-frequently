@@ -3,7 +3,7 @@
 
 {% block main %}
 <h1>{{ object.question }}</h1>
-<p>{% trans "Rating" %}: {{ object.votes }}</p>
+<p>{% trans "Rating" %}: {{ object.rating }}</p>
 <p>{{ object.answer }}</p>
 {% include "frequently/partials/feedback.html" %}
 {% endblock %}

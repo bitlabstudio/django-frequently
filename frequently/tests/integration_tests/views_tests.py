@@ -18,40 +18,39 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
         self.category_1 = EntryCategoryFactory()
         self.category_2 = EntryCategoryFactory()
         self.category_3 = EntryCategoryFactory()
-        self.entry_1 = EntryFactory(votes=2, amount_of_views=500)
+        self.entry_1 = EntryFactory(upvotes=2, amount_of_views=500)
         self.entry_1.category.add(self.category_1)
-        self.entry_2 = EntryFactory(votes=-4, amount_of_views=200)
+        self.entry_2 = EntryFactory(downvotes=4, amount_of_views=200)
         self.entry_2.category.add(self.category_1)
-        self.entry_3 = EntryFactory(votes=3, amount_of_views=100)
+        self.entry_3 = EntryFactory(upvotes=3, amount_of_views=100)
         self.entry_3.category.add(self.category_1)
-        self.entry_4 = EntryFactory(votes=7, amount_of_views=200)
+        self.entry_4 = EntryFactory(upvotes=7, amount_of_views=200)
         self.entry_4.category.add(self.category_2)
-        self.entry_5 = EntryFactory(votes=2, amount_of_views=50)
+        self.entry_5 = EntryFactory(upvotes=2, amount_of_views=50)
         self.entry_5.category.add(self.category_2)
 
     def get_view_name(self):
-        return 'frequently:category_list'
+        return 'frequently_category_list'
 
     def test_negative_feedback(self):
         self.should_be_callable_when_authenticated(self.user)
         data = {
-            'down1': 'Foo',
+            'down%d' % self.entry_1.pk: 'Foo',
         }
-        resp = self.client.get(reverse('frequently:category_list'), data=data)
+        resp = self.client.get(self.get_url(), data=data)
         self.assertEqual(resp.status_code, 200)
         data = {
-            'down1': 'Foo',
+            'down%d' % self.entry_1.pk: 'Foo',
             'remark': 'Bar',
         }
-        resp = self.client.post(reverse('frequently:category_list'), data=data)
+        resp = self.client.post(self.get_url(), data=data)
         self.assertEqual(Feedback.objects.get(pk=1).remark, 'Bar')
 
     def test_positive_feedback(self):
-        self.should_be_callable_when_authenticated(self.user)
         data = {
-            'up1': 'Foo',
+            'up%d' % self.entry_1.pk: 'Foo',
         }
-        self.client.post(reverse('frequently:category_list'), data=data)
+        self.client.post(self.get_url(), data=data)
         self.assertEqual(len(Entry.objects.get(
             pk=self.entry_1.pk).feedback_set.all()), 1)
 
@@ -62,14 +61,13 @@ class CategoryDetailViewTestCase(ViewTestMixin, TestCase):
         self.category = EntryCategoryFactory()
 
     def get_view_name(self):
-        return 'frequently:category_detail'
+        return 'frequently_category_detail'
 
     def get_view_kwargs(self):
         return {'pk': self.category.pk, 'slug': self.category.slug}
 
     def test_view(self):
-        resp = self.client.get(self.get_url())
-        self.assertEqual(resp.status_code, 200)
+        self.should_be_callable_when_anonymous()
 
 
 class EntryDetailViewTestCase(ViewTestMixin, TestCase):
@@ -78,14 +76,13 @@ class EntryDetailViewTestCase(ViewTestMixin, TestCase):
         self.entry = EntryFactory()
 
     def get_view_name(self):
-        return 'frequently:entry_detail'
+        return 'frequently_entry_detail'
 
     def get_view_kwargs(self):
         return {'pk': self.entry.pk, 'slug': self.entry.slug}
 
     def test_view(self):
-        resp = self.client.get(self.get_url())
-        self.assertEqual(resp.status_code, 200)
+        self.should_be_callable_when_anonymous()
 
 
 class EntryCreateViewTestCase(ViewTestMixin, TestCase):
@@ -94,7 +91,7 @@ class EntryCreateViewTestCase(ViewTestMixin, TestCase):
         self.user = UserFactory()
 
     def get_view_name(self):
-        return 'frequently:submit_question'
+        return 'frequently_submit_question'
 
     def test_view(self):
         self.should_be_callable_when_authenticated(self.user)
@@ -104,6 +101,6 @@ class EntryCreateViewTestCase(ViewTestMixin, TestCase):
         resp = self.client.post(self.get_url(), data=data)
         self.assertRedirects(
             resp,
-            reverse('frequently:category_list'),
+            reverse('frequently_category_list'),
             msg_prefix=('Should redirect to category list view.')
         )

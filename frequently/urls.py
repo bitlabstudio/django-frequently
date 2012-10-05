@@ -15,21 +15,21 @@ from frequently.views import (
 urlpatterns = patterns('',
     url(r'^$',
         EntryCategoryListView.as_view(),
-        name='category_list',
+        name='frequently_category_list',
     ),
 
     url(r'^(?P<pk>\d+)/(?P<slug>[a-z-0-9]+)/$',
         EntryCategoryDetailView.as_view(),
-        name='category_detail',
+        name='frequently_category_detail',
     ),
 
     url(r'^question/(?P<pk>\d+)/(?P<slug>[a-z-0-9]+)/$',
         EntryDetailView.as_view(),
-        name='entry_detail',
+        name='frequently_entry_detail',
     ),
 
     url(r'^your-question/$',
         EntryCreateView.as_view(),
-        name='submit_question',
+        name='frequently_submit_question',
     ),
 )
