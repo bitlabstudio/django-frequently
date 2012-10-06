@@ -26,6 +26,16 @@ TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), 'test_app/templates'),
 )
 
+MIDDLEWARE_CLASSES = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+]
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+)
+
 COVERAGE_REPORT_HTML_OUTPUT_DIR = os.path.join(
     os.path.dirname(__file__), 'coverage')
 COVERAGE_MODULE_EXCLUDES = [

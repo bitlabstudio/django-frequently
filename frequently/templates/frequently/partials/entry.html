@@ -8,6 +8,10 @@
 <div class="frequentlyAnswer answerID{{ entry.pk }}">
     <p>{% trans "Rating" %}: <span class="ratingID{{ entry.pk }}">{{ entry.rating }}</span></p>
     <p>{{ entry.answer }}</p>
-    {% include "frequently/partials/feedback.html" with object=entry %}
+    {% if not entry.pk in rated_entries %}
+        {% include "frequently/partials/feedback.html" with object=entry %}
+    {% else %}
+        <p><em>{% trans "You've already rated this entry." %}</em></p>
+    {% endif %}
     <a onclick="hideAnswer('{{ entry.pk }}'); return false;" href="#">{% trans "Hide answer" %}</a>
 </div>

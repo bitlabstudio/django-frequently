@@ -39,6 +39,7 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
     def test_positive_feedback(self):
         data = {
             'up%d' % self.entry_1.pk: 'Foo',
+            'user_id': self.user.pk
         }
         self.client.post(self.get_url(), data=data)
         self.assertEqual(len(Entry.objects.get(
@@ -48,6 +49,7 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
         self.should_be_callable_when_authenticated(self.user)
         data = {
             'down%d' % self.entry_1.pk: 'Foo',
+            'user_id': self.user.pk
         }
         resp = self.client.post(self.get_url(), data=data)
         self.assertEqual(Feedback.objects.get(pk=1).validation, 'N')
@@ -55,6 +57,7 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
     def test_positive_feedback_with_ajax(self):
         data = {
             'up%d' % self.entry_1.pk: 'Foo',
+            'user_id': 'test'
         }
         self.client.post(
             self.get_url(),
