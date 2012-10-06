@@ -19,7 +19,7 @@ http://guide.python-distribute.org/quickstart.html
 """
 import os
 from setuptools import setup, find_packages
-import package_name
+import frequently
 
 
 def read(fname):
