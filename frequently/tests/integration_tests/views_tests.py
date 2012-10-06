@@ -51,7 +51,7 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
             'down%d' % self.entry_1.pk: 'Foo',
             'user_id': self.user.pk
         }
-        resp = self.client.post(self.get_url(), data=data)
+        self.client.post(self.get_url(), data=data)
         self.assertEqual(Feedback.objects.get(pk=1).validation, 'N')
 
     def test_positive_feedback_with_ajax(self):
@@ -96,7 +96,7 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
             'feedback%d' % feedback.pk: True,
             'remark': remark,
         }
-        resp = self.client.post(
+        self.client.post(
             self.get_url(),
             data=data,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
