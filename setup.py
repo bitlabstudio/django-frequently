@@ -31,7 +31,7 @@ def read(fname):
 
 setup(
     name="django-frequently",
-    version=package_name.__version__,
+    version=frequently.__version__,
     description=read('DESCRIPTION'),
     long_description=read('README.rst'),
     license='The MIT License',
@@ -50,5 +50,5 @@ setup(
         'coverage',
         'django-coverage',
     ],
-    test_suite='package_name.tests.runtests.runtests',
+    test_suite='frequently.tests.runtests.runtests',
 )
