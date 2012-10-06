@@ -8,7 +8,11 @@ from django.core.urlresolvers import reverse
 from django_libs.tests.factories import UserFactory
 from django_libs.tests.mixins import ViewTestMixin
 from frequently.models import Entry, Feedback
-from frequently.tests.factories import EntryFactory, EntryCategoryFactory
+from frequently.tests.factories import (
+    EntryFactory,
+    EntryCategoryFactory,
+    FeedbackFactory,
+)
 
 
 class CategoryListViewTestCase(ViewTestMixin, TestCase):
@@ -32,20 +36,6 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
     def get_view_name(self):
         return 'frequently_category_list'
 
-    def test_negative_feedback(self):
-        self.should_be_callable_when_authenticated(self.user)
-        data = {
-            'down%d' % self.entry_1.pk: 'Foo',
-        }
-        resp = self.client.get(self.get_url(), data=data)
-        self.assertEqual(resp.status_code, 200)
-        data = {
-            'down%d' % self.entry_1.pk: 'Foo',
-            'remark': 'Bar',
-        }
-        resp = self.client.post(self.get_url(), data=data)
-        self.assertEqual(Feedback.objects.get(pk=1).remark, 'Bar')
-
     def test_positive_feedback(self):
         data = {
             'up%d' % self.entry_1.pk: 'Foo',
@@ -53,6 +43,62 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
         self.client.post(self.get_url(), data=data)
         self.assertEqual(len(Entry.objects.get(
             pk=self.entry_1.pk).feedback_set.all()), 1)
+
+    def test_negative_feedback(self):
+        self.should_be_callable_when_authenticated(self.user)
+        data = {
+            'down%d' % self.entry_1.pk: 'Foo',
+        }
+        resp = self.client.post(self.get_url(), data=data)
+        self.assertEqual(Feedback.objects.get(pk=1).validation, 'N')
+
+    def test_positive_feedback_with_ajax(self):
+        data = {
+            'up%d' % self.entry_1.pk: 'Foo',
+        }
+        self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(len(Entry.objects.get(
+            pk=self.entry_1.pk).feedback_set.all()), 1)
+
+    def test_negative_feedback_with_ajax(self):
+        data = {
+            'down%d' % self.entry_1.pk: 'Foo',
+        }
+        self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(Feedback.objects.get(pk=1).validation, 'N')
+
+    def test_rating_refresh_ajax_request(self):
+        data = {
+            'ratingID': 'ratingID%s' % self.entry_1.pk,
+        }
+        resp = self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(resp.content, '%s' % self.entry_1.rating())
+
+    def test_feedback_submission_with_ajax(self):
+        feedback = FeedbackFactory()
+        remark = 'Your app is beautiful'
+        data = {
+            'feedback%d' % feedback.pk: True,
+            'remark': remark,
+        }
+        resp = self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(Feedback.objects.get(pk=feedback.pk).remark, remark)
 
 
 class CategoryDetailViewTestCase(ViewTestMixin, TestCase):

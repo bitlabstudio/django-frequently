@@ -16,10 +16,10 @@ DATABASES = {
 ROOT_URLCONF = 'frequently.tests.urls'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(__file__, '../../../static/')
-MEDIA_ROOT = os.path.join(__file__, '../../../media/')
+STATIC_ROOT = os.path.join(os.path.dirname(__file__), '../static/')
+MEDIA_ROOT = os.path.join(os.path.dirname(__file__), '../media/')
 STATICFILES_DIRS = (
-    os.path.join(__file__, 'test_static'),
+    os.path.join(os.path.dirname(__file__), '../static/'),
 )
 
 TEMPLATE_DIRS = (

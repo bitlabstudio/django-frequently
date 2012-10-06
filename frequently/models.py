@@ -52,8 +52,8 @@ class Entry(models.Model):
     :creation_date: Date of entry creation.
     :last_view_date: Date of the last click/view.
     :amount_of_views: Amount of views/clicks.
-    :upvotes: Positive vote account for this entry.
-    :downvotes: Negative vote account for this entry.
+    :upvotes: Positive vote amount for this entry.
+    :downvotes: Negative vote amount for this entry.
     :published: Shows/hides entries.
 
     """

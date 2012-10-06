@@ -4,7 +4,11 @@
 <h1>{{ object.name }}</h1>
 <div>
     {% for entry in object.get_entries %}
-    {% include "frequently/partials/entry.html" %}
+        {% include "frequently/partials/entry.html" %}
     {% endfor %}
 </div>
+{% endblock %}
+
+{% block extrajs %}
+<script src="{{ STATIC_URL }}frequently/js/frequently.js"></script>
 {% endblock %}

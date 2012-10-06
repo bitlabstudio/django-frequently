@@ -16,8 +16,12 @@
 {% for category in object_list %}
     <h2>{{ category.name }}</h2>
     {% for entry in category.get_entries %}
-    {% include "frequently/partials/entry.html" %}
+        {% include "frequently/partials/entry.html" %}
     {% endfor %}
 {% endfor %}
 </div>
+{% endblock %}
+
+{% block extrajs %}
+<script src="{{ STATIC_URL }}frequently/js/frequently.js"></script>
 {% endblock %}

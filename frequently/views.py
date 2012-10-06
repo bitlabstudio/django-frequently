@@ -5,6 +5,8 @@ Views for the ``django-frequently`` application.
 from math import fsum
 
 from django.core.urlresolvers import reverse
+from django.shortcuts import HttpResponse
+from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView
 
@@ -19,34 +21,58 @@ class FeedbackMixin(object):
     """
     def get_context_data(self, **kwargs):
         context = super(FeedbackMixin, self).get_context_data(**kwargs)
-        for key in self.request.GET.keys():
-            if key.startswith('down'):
-                context.update({'depreciate': int(key.replace('down', ''))})
+        for key in self.request.POST.keys():
+            if key.startswith('down') or key.startswith('up'):
+                context.update({
+                    'feedback_entry': int(key.replace('up', '').replace('down', '')),
+                    'feedback': self.feedback,
+                })
                 return context
         return context
 
     def post(self, request, *args, **kwargs):
-        feedback = Feedback()
+        self.feedback = Feedback()
         if request.user.is_authenticated():
-            feedback.user = request.user
+            self.feedback.user = request.user
         for key in self.request.POST.keys():
-            if key.startswith('up'):
-                entry = Entry.objects.get(pk=key.replace('up', ''))
-                entry.upvotes += 1
-                feedback.entry = entry
-                feedback.validation = "P"
+            if key.startswith('up') or key.startswith('down'):
+                entry = Entry.objects.get(
+                    pk=key.replace('up', '').replace('down', ''))
+                self.feedback.entry = entry
+                if key.startswith('up'):
+                    entry.upvotes += 1
+                    self.feedback.validation = "P"
+                else:
+                    entry.downvotes += 1
+                    self.feedback.validation = "N"
                 entry.save()
-                feedback.save()
-                break
-            elif key.startswith('down'):
-                entry = Entry.objects.get(pk=key.replace('down', ''))
-                entry.downvotes -= 1
-                feedback.entry = entry
-                feedback.validation = "N"
-                feedback.remark = request.POST.get("remark")
-                entry.save()
-                feedback.save()
-                break
+                self.feedback.save()
+                if request.is_ajax():
+                    return TemplateResponse(
+                        request,
+                        'frequently/partials/feedback_form.html',
+                        {
+                            'feedback_entry': entry.pk,
+                            'feedback': self.feedback,
+                        }
+                    )
+            elif key == 'ratingID' and request.is_ajax():
+                entry = Entry.objects.get(
+                    pk=request.POST.get('ratingID').replace('ratingID', ''))
+                return HttpResponse(entry.rating())
+            elif key.startswith('feedback'):
+                self.feedback = Feedback.objects.get(
+                    pk=key.replace('feedback', ''))
+                self.feedback.remark = request.POST.get("remark")
+                self.feedback.save()
+                if request.is_ajax():
+                    return TemplateResponse(
+                        request,
+                        'frequently/partials/feedback_form.html',
+                        {
+                            'feedback_send': True,
+                        }
+                    )
         return self.get(self, request, *args, **kwargs)
 
 
