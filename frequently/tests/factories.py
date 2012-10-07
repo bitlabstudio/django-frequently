@@ -21,8 +21,8 @@ class EntryFactory(factory.Factory):
 
     owner = factory.SubFactory(UserFactory)
     question = 'How can I stop using your awesome app?'
-    creation_date = timezone.datetime.now()
-    last_view_date = timezone.datetime.now()
+    creation_date = timezone.now()
+    last_view_date = timezone.now()
     published = True
 
     @classmethod
@@ -37,5 +37,5 @@ class EntryFactory(factory.Factory):
 class FeedbackFactory(factory.Factory):
     FACTORY_FOR = models.Feedback
 
-    submission_date = timezone.datetime.now()
+    submission_date = timezone.now()
     validation = 'P'

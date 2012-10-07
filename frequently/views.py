@@ -37,6 +37,12 @@ class FeedbackMixin(object):
     def post(self, request, *args, **kwargs):
         self.feedback = Feedback()
         for key in request.POST.keys():
+            if key == "refresh_last_view":
+                entry = Entry.objects.get(
+                    pk=request.POST['refresh_last_view'])
+                entry.last_view_date = timezone.now()
+                entry.save()
+                return HttpResponse(entry.rating())
             if key == "user_id":
                 try:
                     user_id = int(request.POST.get('user_id'))
@@ -155,7 +161,7 @@ class EntryDetailView(FeedbackMixin, DetailView):
 
     def get_object(self, **kwargs):
         obj = super(EntryDetailView, self).get_object(**kwargs)
-        obj.last_view_date = timezone.datetime.now()
+        obj.last_view_date = timezone.now()
         obj.save()
         return obj
 

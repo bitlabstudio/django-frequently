@@ -4,6 +4,7 @@ Tests for the models of the myapp application.
 """
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.utils import timezone
 
 from django_libs.tests.factories import UserFactory
 from django_libs.tests.mixins import ViewTestMixin
@@ -102,6 +103,20 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.assertEqual(Feedback.objects.get(pk=feedback.pk).remark, remark)
+
+    def test_last_view_date_with_ajax(self):
+        data = {
+            'refresh_last_view': self.entry_1.pk,
+        }
+        self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertGreater(
+            Entry.objects.get(pk=self.entry_1.pk).last_view_date,
+            self.entry_1.last_view_date,
+        )
 
 
 class CategoryDetailViewTestCase(ViewTestMixin, TestCase):

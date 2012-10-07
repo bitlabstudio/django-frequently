@@ -77,17 +77,17 @@ class Entry(models.Model):
     slug = models.CharField(max_length=100)
 
     answer = models.TextField(
-        verbose_name=_('Categories'),
+        verbose_name=_('Answer'),
         blank=True, null=True,
     )
 
     creation_date = models.DateTimeField(
-        default=timezone.datetime.now(),
+        default=timezone.now(),
         verbose_name=_('Creation date'),
     )
 
     last_view_date = models.DateTimeField(
-        default=timezone.datetime.now(),
+        default=timezone.now(),
         verbose_name=_('Date of last view'),
     )
 
@@ -156,7 +156,7 @@ class Feedback(models.Model):
     )
 
     submission_date = models.DateTimeField(
-        default=timezone.datetime.now(),
+        default=timezone.now(),
         verbose_name=_('Submission date'),
     )
 

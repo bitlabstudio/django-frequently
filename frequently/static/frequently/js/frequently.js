@@ -1,5 +1,15 @@
 function openAnswer(answerID) {
     $('.answerID' + answerID).slideDown();
+    $.post(
+        '',
+        {
+            "csrfmiddlewaretoken": getCSRFToken(),
+            "refresh_last_view": answerID
+        },
+        function(data) {
+            alert(data);
+        }
+    );
 }
 
 function hideAnswer(answerID) {
