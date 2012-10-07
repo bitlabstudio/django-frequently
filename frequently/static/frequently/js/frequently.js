@@ -42,7 +42,7 @@ function refreshRating(ratingID) {
 }
 
 $(document).ready(function() {
-    $('.frequentlyAnswer').slideUp();
+    $('.frequentlyAnswer').hide();
 
     $('.frequentlyForm input[type="submit"]').click(function() {
         var form = $(this).closest('.frequentlyForm');

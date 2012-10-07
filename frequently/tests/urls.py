@@ -6,11 +6,11 @@ you can actually reach the app's views (provided it has any views, of course).
 """
 from django.conf.urls.defaults import include, patterns, url
 
-from test_settings import STATIC_ROOT
+from django.conf import settings
 
 
 urlpatterns = patterns('',
     url(r'^', include('frequently.urls')),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': STATIC_ROOT}),
+            {'document_root': settings.STATIC_ROOT}),
 )

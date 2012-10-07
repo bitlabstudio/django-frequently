@@ -46,7 +46,10 @@ class FeedbackMixin(object):
             if key == "user_id":
                 try:
                     user_id = int(request.POST.get('user_id'))
-                    self.feedback.user = User.objects.get(pk=user_id)
+                    try:
+                        self.feedback.user = User.objects.get(pk=user_id)
+                    except User.DoesNotExist:
+                        pass
                 except ValueError:
                     pass
             if key.startswith('up') or key.startswith('down'):

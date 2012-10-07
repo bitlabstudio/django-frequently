@@ -58,6 +58,17 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
     def test_positive_feedback_with_ajax(self):
         data = {
             'up%d' % self.entry_1.pk: 'Foo',
+            'user_id': '55555'
+        }
+        self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(len(Entry.objects.get(
+            pk=self.entry_1.pk).feedback_set.all()), 1)
+        data = {
+            'up%d' % self.entry_1.pk: 'Foo',
             'user_id': 'test'
         }
         self.client.post(
