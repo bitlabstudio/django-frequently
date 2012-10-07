@@ -5,9 +5,6 @@ function openAnswer(answerID) {
         {
             "csrfmiddlewaretoken": getCSRFToken(),
             "refresh_last_view": answerID
-        },
-        function(data) {
-            alert(data);
         }
     );
 }

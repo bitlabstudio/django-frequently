@@ -42,7 +42,7 @@ class FeedbackMixin(object):
                     pk=request.POST['refresh_last_view'])
                 entry.last_view_date = timezone.now()
                 entry.save()
-                return HttpResponse(entry.rating())
+                return HttpResponse(entry.last_view_date)
             if key == "user_id":
                 try:
                     user_id = int(request.POST.get('user_id'))
