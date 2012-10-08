@@ -74,7 +74,7 @@ class Entry(models.Model):
         verbose_name=_('Question'),
     )
 
-    slug = models.CharField(max_length=100)
+    slug = models.CharField(max_length=200)
 
     answer = models.TextField(
         verbose_name=_('Answer'),
