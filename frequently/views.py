@@ -41,6 +41,7 @@ class FeedbackMixin(object):
                 entry = Entry.objects.get(
                     pk=request.POST['refresh_last_view'])
                 entry.last_view_date = timezone.now()
+                entry.amount_of_views += 1
                 entry.save()
                 return HttpResponse(entry.last_view_date)
             if key == "user_id":
@@ -165,6 +166,7 @@ class EntryDetailView(FeedbackMixin, DetailView):
     def get_object(self, **kwargs):
         obj = super(EntryDetailView, self).get_object(**kwargs)
         obj.last_view_date = timezone.now()
+        obj.amount_of_views += 1
         obj.save()
         return obj
 

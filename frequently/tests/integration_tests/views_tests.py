@@ -4,7 +4,6 @@ Tests for the models of the myapp application.
 """
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from django.utils import timezone
 
 from django_libs.tests.factories import UserFactory
 from django_libs.tests.mixins import ViewTestMixin
