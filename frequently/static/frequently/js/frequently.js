@@ -1,16 +1,21 @@
 function openAnswer(answerID) {
-    $('.answerID' + answerID).slideDown();
-    $.post(
-        '',
-        {
-            "csrfmiddlewaretoken": getCSRFToken(),
-            "refresh_last_view": answerID
-        }
-    );
+    if ($('.answerID' + answerID).length == 0) {
+        $.post(
+            '',
+            {
+                "csrfmiddlewaretoken": getCSRFToken(),
+                "get_answer": answerID
+            },
+            function(data) {
+                $(data).insertAfter('#frequentlyAnswer' + answerID);
+                initializeForm();
+            }
+        );
+    }
 }
 
 function hideAnswer(answerID) {
-    $('.answerID' + answerID).slideUp();
+    $('.answerID' + answerID).remove();
 }
 
 function getCSRFToken() {
@@ -28,22 +33,7 @@ function getCSRFToken() {
     return cookieValue;
 }
 
-function refreshRating(ratingID) {
-    $.post(
-        '',
-        {
-            "csrfmiddlewaretoken": getCSRFToken(),
-            "ratingID": ratingID
-        },
-        function(data) {
-            $('.' + ratingID).html(data);
-        }
-    );
-}
-
-$(document).ready(function() {
-    $('.frequentlyAnswer').hide();
-
+function initializeForm() {
     $('.frequentlyForm input[type="submit"]').click(function() {
         var form = $(this).closest('.frequentlyForm');
         var data = form.serializeArray();
@@ -64,4 +54,17 @@ $(document).ready(function() {
         });
         return false;
     });
-});
+}
+
+function refreshRating(ratingID) {
+    $.post(
+        '',
+        {
+            "csrfmiddlewaretoken": getCSRFToken(),
+            "ratingID": ratingID
+        },
+        function(data) {
+            $('.' + ratingID).html(data);
+        }
+    );
+}

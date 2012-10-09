@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load url from future %}
+<div class="answerID{{ entry.pk }}">
+    <p>{% trans "Rating" %}: <span class="ratingID{{ entry.pk }}">{{ entry.rating }}</span></p>
+    <p>{{ entry.answer }}</p>
+    {% if not entry.pk in rated_entries or feedback_entry == entry.pk %}
+        {% include "frequently/partials/feedback.html" with object=entry %}
+    {% else %}
+        <p><em>{% trans "You've already rated this entry." %}</em></p>
+    {% endif %}
+    <a onclick="hideAnswer('{{ entry.pk }}'); return false;" href="{% url "frequently_list" %}">{% trans "Hide answer" %}</a>
+</div>

@@ -1,17 +1,7 @@
 {% load i18n %}
 {% load url from future %}
-<p>
+<p id="frequentlyAnswer{{ entry.pk }}">
     <strong>
-        <a onclick="openAnswer('{{ entry.pk }}'); return false;" href="{% url "frequently_entry_detail" pk=entry.pk slug=entry.slug %}">{{ entry.question }}</a>
+        <a onclick="openAnswer('{{ entry.pk }}'); return false;" href="{% url "frequently_entry_detail" pk=entry.pk slug=entry.slug %}#answer">{{ entry.question }}</a>
     </strong>
 </p>
-<div class="frequentlyAnswer answerID{{ entry.pk }}">
-    <p>{% trans "Rating" %}: <span class="ratingID{{ entry.pk }}">{{ entry.rating }}</span></p>
-    <p>{{ entry.answer }}</p>
-    {% if not entry.pk in rated_entries %}
-        {% include "frequently/partials/feedback.html" with object=entry %}
-    {% else %}
-        <p><em>{% trans "You've already rated this entry." %}</em></p>
-    {% endif %}
-    <a onclick="hideAnswer('{{ entry.pk }}'); return false;" href="#">{% trans "Hide answer" %}</a>
-</div>

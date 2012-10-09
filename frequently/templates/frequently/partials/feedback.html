@@ -1,7 +1,9 @@
 {% load i18n %}
 <form class="frequentlyForm" id="ratingID{{ entry.pk }}" method="post" action=".">
     {% csrf_token %}
-    <input type="hidden" name="user_id" value="sdsdsa" />
+    {% if request.user.is_authenticated %}
+        <input type="hidden" name="user_id" value="{{ request.user.id }}" />
+    {% endif %}
     {% if feedback_entry == entry.pk %}
         {% include "frequently/partials/feedback_form.html" %}
     {% else %}

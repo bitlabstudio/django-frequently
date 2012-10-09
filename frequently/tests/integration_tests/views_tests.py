@@ -17,8 +17,8 @@ from frequently.tests.factories import (
 )
 
 
-class CategoryListViewTestCase(ViewTestMixin, TestCase):
-    """Tests for CategoryListView view class."""
+class EntryPostMixin(ViewTestMixin):
+    """Mixin for Entry post scenarios."""
     def setUp(self):
         self.user = UserFactory()
         self.category_1 = EntryCategoryFactory()
@@ -35,8 +35,8 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
         self.entry_5 = EntryFactory(upvotes=2, amount_of_views=50)
         self.entry_5.category.add(self.category_2)
 
-    def get_view_name(self):
-        return 'frequently_category_list'
+    def test_view(self):
+        self.should_be_callable_when_anonymous()
 
     def test_positive_feedback(self):
         data = {
@@ -118,7 +118,7 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
 
     def test_last_view_date_with_ajax(self):
         data = {
-            'refresh_last_view': self.entry_1.pk,
+            'get_answer': self.entry_1.pk,
         }
         self.client.post(
             self.get_url(),
@@ -131,34 +131,19 @@ class CategoryListViewTestCase(ViewTestMixin, TestCase):
         )
 
 
-class CategoryDetailViewTestCase(ViewTestMixin, TestCase):
-    """Tests for the ``CategoryDetailView`` generic view class."""
-    def setUp(self):
-        self.category = EntryCategoryFactory()
-
+class CategoryListViewTestCase(EntryPostMixin, TestCase):
+    """Tests for CategoryListView view class."""
     def get_view_name(self):
-        return 'frequently_category_detail'
-
-    def get_view_kwargs(self):
-        return {'pk': self.category.pk, 'slug': self.category.slug}
-
-    def test_view(self):
-        self.should_be_callable_when_anonymous()
+        return 'frequently_list'
 
 
-class EntryDetailViewTestCase(ViewTestMixin, TestCase):
+class EntryDetailViewTestCase(EntryPostMixin, TestCase):
     """Tests for the ``EntryDetailView`` generic view class."""
-    def setUp(self):
-        self.entry = EntryFactory()
-
     def get_view_name(self):
         return 'frequently_entry_detail'
 
     def get_view_kwargs(self):
-        return {'pk': self.entry.pk, 'slug': self.entry.slug}
-
-    def test_view(self):
-        self.should_be_callable_when_anonymous()
+        return {'pk': self.entry_1.pk, 'slug': self.entry_1.slug}
 
 
 class EntryCreateViewTestCase(ViewTestMixin, TestCase):
@@ -179,7 +164,7 @@ class EntryCreateViewTestCase(ViewTestMixin, TestCase):
         resp = self.client.post(self.get_url(), data=data)
         self.assertRedirects(
             resp,
-            reverse('frequently_category_list'),
+            reverse('frequently_list'),
             msg_prefix=('Should redirect to category list view.')
         )
         settings.FREQUENTLY_RECIPIENTS = (
