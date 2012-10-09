@@ -2,6 +2,8 @@
 Tests for the models of the myapp application.
 
 """
+from django.conf import settings
+from django.core import mail
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
@@ -171,6 +173,8 @@ class EntryCreateViewTestCase(ViewTestMixin, TestCase):
         self.should_be_callable_when_authenticated(self.user)
         data = {
             'question': 'Foo',
+            'name': 'Bar',
+            'email': 'info@example.com',
         }
         resp = self.client.post(self.get_url(), data=data)
         self.assertRedirects(
@@ -178,3 +182,8 @@ class EntryCreateViewTestCase(ViewTestMixin, TestCase):
             reverse('frequently_category_list'),
             msg_prefix=('Should redirect to category list view.')
         )
+        settings.FREQUENTLY_RECIPIENTS = (
+            ('Your Name', 'info@example.com'),
+        )
+        resp = self.client.post(self.get_url(), data=data)
+        self.assertEqual(len(mail.outbox), 1)

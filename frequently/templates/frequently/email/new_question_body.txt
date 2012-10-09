@@ -1,0 +1,15 @@
+{% load i18n %}{% load url from future %}
+{% trans "Hello" %},
+{% trans "please take a look at the following recently submitted question:" %}
+
+{% trans "Name" %}: {{ name }}
+{% trans "eMail" %}: {{ email }}
+{% trans "Question" %}: {{ question }}
+
+{% trans "Please check and publish/remove the question ASAP. Be aware to send a notification to the sender of the question." %}
+
+{% trans "Regards" %},
+{% trans "your Bitmazk-Team." %}
+--
+
+{% trans "Do you need assistance? info@bitmazk.com!" %}

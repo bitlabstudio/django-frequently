@@ -6,6 +6,11 @@ PROJECT_ROOT = os.path.dirname(__file__)
 
 USE_TZ = True
 
+FROM_EMAIL = "info@example.com"
+DEFAULT_FROM_EMAIL = FROM_EMAIL
+SERVER_EMAIL = FROM_EMAIL
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

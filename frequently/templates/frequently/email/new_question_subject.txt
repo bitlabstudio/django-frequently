@@ -1,0 +1,1 @@
+{% load i18n %}{% trans "Project Kairos - a new FAQ question has been submitted" %}
