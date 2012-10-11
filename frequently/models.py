@@ -37,7 +37,9 @@ class EntryCategory(models.Model):
         super(EntryCategory, self).save(*args, **kwargs)
 
     def get_entries(self):
-        return self.entries.filter(published=True)
+        return self.entries.filter(published=True).annotate(
+            null_position=models.Count('fixed_position')).order_by(
+                '-null_position', 'fixed_position', '-amount_of_views')
 
 
 class Entry(models.Model):
@@ -52,6 +54,7 @@ class Entry(models.Model):
     :creation_date: Date of entry creation.
     :last_view_date: Date of the last click/view.
     :amount_of_views: Amount of views/clicks.
+    :fixed_position: Set a position to avoid ordering by views.
     :upvotes: Positive vote amount for this entry.
     :downvotes: Negative vote amount for this entry.
     :published: Shows/hides entries.
@@ -96,6 +99,11 @@ class Entry(models.Model):
         verbose_name=_('Amount of views'),
     )
 
+    fixed_position = models.PositiveIntegerField(
+        verbose_name=_('Fixed position'),
+        blank=True, null=True,
+    )
+
     upvotes = models.PositiveIntegerField(
         default=0,
         verbose_name=_('Upvotes'),
@@ -113,9 +121,6 @@ class Entry(models.Model):
 
     def __unicode__(self):
         return self.question
-
-    class Meta:
-        ordering = ["-amount_of_views", "-id"]
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.question)

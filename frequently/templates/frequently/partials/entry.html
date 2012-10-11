@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load url from future %}
-<p id="frequentlyAnswer{{ entry.pk }}">
+<p id="frequentlyEntry{{ entry.pk }}">
     <strong>
         <a onclick="openAnswer('{{ entry.pk }}'); return false;" href="{% url "frequently_entry_detail" pk=entry.pk slug=entry.slug %}#answer">{{ entry.question }}</a>
     </strong>

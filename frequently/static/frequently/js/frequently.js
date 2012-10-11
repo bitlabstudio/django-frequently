@@ -1,13 +1,13 @@
 function openAnswer(answerID) {
     if ($('.answerID' + answerID).length == 0) {
         $.post(
-            '',
+            '.',
             {
                 "csrfmiddlewaretoken": getCSRFToken(),
                 "get_answer": answerID
             },
             function(data) {
-                $(data).insertAfter('#frequentlyAnswer' + answerID);
+                $(data).insertAfter('#frequentlyEntry' + answerID);
                 initializeForm();
             }
         );
@@ -58,7 +58,7 @@ function initializeForm() {
 
 function refreshRating(ratingID) {
     $.post(
-        '',
+        '.',
         {
             "csrfmiddlewaretoken": getCSRFToken(),
             "ratingID": ratingID

@@ -53,6 +53,7 @@
             "last_view_date": "2012-10-04T14:26:21Z",
             "upvotes": 2,
             "amount_of_views": 500,
+            "fixed_position": 2,
             "category": [1],
             "published": true
         }
@@ -85,6 +86,7 @@
             "last_view_date": "2012-10-04T14:26:21Z",
             "upvotes": 3,
             "amount_of_views": 100,
+            "fixed_position": 1,
             "category": [1],
             "published": true
         }
