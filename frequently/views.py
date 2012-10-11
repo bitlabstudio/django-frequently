@@ -6,7 +6,7 @@ from math import fsum
 
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.shortcuts import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView
@@ -90,13 +90,26 @@ class EntryMixin(object):
             except ValueError:
                 pass
         if 'ratingID' in request.POST.keys() and request.is_ajax():
-            entry = Entry.objects.get(
-                pk=request.POST.get('ratingID').replace('ratingID', ''))
-            return HttpResponse(entry.rating())
+            try:
+                entry_id = int(request.POST.get('ratingID').replace(
+                    'ratingID', ''))
+                try:
+                    entry = Entry.objects.get(pk=entry_id)
+                    return HttpResponse(entry.rating())
+                except Entry.DoesNotExist:
+                    return HttpResponseNotFound()
+            except ValueError:
+                return HttpResponseNotFound()
         for key in request.POST.keys():
             if key.startswith('up') or key.startswith('down'):
-                entry = Entry.objects.get(
-                    pk=key.replace('up', '').replace('down', ''))
+                try:
+                    entry_id = int(key.replace('up', '').replace('down', ''))
+                    try:
+                        entry = Entry.objects.get(pk=entry_id)
+                    except Entry.DoesNotExist:
+                        return HttpResponseNotFound()
+                except ValueError:
+                    return HttpResponseNotFound()
                 if not request.session.get('rated_entries', False):
                     request.session['rated_entries'] = []
                 if not entry.pk in request.session['rated_entries']:
@@ -121,8 +134,14 @@ class EntryMixin(object):
                             },
                         )
             elif key.startswith('feedback'):
-                self.feedback = Feedback.objects.get(
-                    pk=key.replace('feedback', ''))
+                try:
+                    feedback_id = int(key.replace('feedback', ''))
+                    try:
+                        self.feedback = Feedback.objects.get(pk=feedback_id)
+                    except Feedback.DoesNotExist:
+                        return HttpResponseNotFound()
+                except ValueError:
+                    return HttpResponseNotFound()
                 self.feedback.remark = request.POST.get("remark")
                 self.feedback.save()
                 if request.is_ajax():

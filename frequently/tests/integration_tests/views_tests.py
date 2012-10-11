@@ -79,6 +79,24 @@ class EntryPostMixin(ViewTestMixin):
         )
         self.assertEqual(len(Entry.objects.get(
             pk=self.entry_1.pk).feedback_set.all()), 1)
+        data = {
+            'up999': 'Foo',
+        }
+        resp = self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(resp.status_code, 404)
+        data = {
+            'upXXX': 'Foo',
+        }
+        resp = self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(resp.status_code, 404)
 
     def test_negative_feedback_with_ajax(self):
         data = {
@@ -101,6 +119,24 @@ class EntryPostMixin(ViewTestMixin):
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.assertEqual(resp.content, '%s' % self.entry_1.rating())
+        data = {
+            'ratingID': 'ratingID999',
+        }
+        resp = self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(resp.status_code, 404)
+        data = {
+            'ratingID': 'ratingIDXXX',
+        }
+        resp = self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(resp.status_code, 404)
 
     def test_feedback_submission_with_ajax(self):
         feedback = FeedbackFactory()
@@ -115,6 +151,24 @@ class EntryPostMixin(ViewTestMixin):
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.assertEqual(Feedback.objects.get(pk=feedback.pk).remark, remark)
+        data = {
+            'feedback999': True,
+        }
+        resp = self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(resp.status_code, 404)
+        data = {
+            'feedbackXXX': True,
+        }
+        resp = self.client.post(
+            self.get_url(),
+            data=data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(resp.status_code, 404)
 
     def test_last_view_date_with_ajax(self):
         data = {
