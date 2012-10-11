@@ -39,7 +39,7 @@ function initializeForm() {
         var data = form.serializeArray();
         data.push({ name: this.name, value: this.value });
         form.find('input[type="submit"]').attr('disabled', true);
-        $.post('', data, function(data) {
+        $.post('.', data, function(data) {
             form.find('input[type="submit"]').remove();
             refreshRating(form.attr('id'));
             form.prepend(data).find('.sendFeedback').click(function() {
