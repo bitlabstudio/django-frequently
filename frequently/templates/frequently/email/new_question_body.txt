@@ -8,8 +8,5 @@
 
 {% trans "Please check and publish/remove the question ASAP. Be aware to send a notification to the sender of the question." %}
 
-{% trans "Regards" %},
-{% trans "your Bitmazk-Team." %}
+{% trans "Regards!" %}
 --
-
-{% trans "Do you need assistance? info@bitmazk.com!" %}

@@ -1,5 +1,7 @@
 function openAnswer(answerID) {
-    if ($('.answerID' + answerID).length == 0) {
+    var entry = $('#frequentlyEntry' + answerID);
+    if (!entry.hasClass('frequentlyOpened')) {
+        entry.addClass('frequentlyOpened');
         $.post(
             '.',
             {
@@ -16,6 +18,7 @@ function openAnswer(answerID) {
 
 function hideAnswer(answerID) {
     $('.answerID' + answerID).remove();
+    $('#frequentlyEntry' + answerID).removeClass('frequentlyOpened');
 }
 
 function getCSRFToken() {
