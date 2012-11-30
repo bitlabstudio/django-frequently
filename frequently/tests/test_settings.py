@@ -4,7 +4,9 @@ import os
 
 PROJECT_ROOT = os.path.dirname(__file__)
 
+DEBUG = True
 USE_TZ = True
+SITE_ID = 1
 
 FROM_EMAIL = "info@example.com"
 DEFAULT_FROM_EMAIL = FROM_EMAIL

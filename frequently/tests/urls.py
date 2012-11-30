@@ -5,12 +5,16 @@ you can actually reach the app's views (provided it has any views, of course).
 
 """
 from django.conf.urls.defaults import include, patterns, url
-
 from django.conf import settings
+from django.contrib import admin
+
+
+admin.autodiscover()
 
 
 urlpatterns = patterns('',
     url(r'^', include('frequently.urls')),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
             {'document_root': settings.STATIC_ROOT}),
 )

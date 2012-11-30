@@ -32,6 +32,7 @@ class EntryForm(forms.ModelForm):
             'upvotes',
             'downvotes',
             'published',
+            'fixed_position',
         )
 
     def __init__(self, owner=None, *args, **kwargs):
