@@ -1,40 +1,63 @@
 django-frequently
 =================
 
-TODO: Describe app.
+A Django application that can be used as a FAQ, a Q&A, for general
+announcements or as a miniblog. There are a lot of functions to increase the
+user experience, like sorting by popularity, statistics and ratings.
+
+This is an early alpha. Use it with caution.
 
 Installation
 ------------
 
+You need to install the following prerequisites in order to use this app::
+
+    pip install django==1.4.2
+    pip install South==0.7.6
+    pip install django-libs==0.8
+
+
 If you want to install the latest stable release from PyPi::
 
-    $ pip install django-frequently 
+    $ pip install django-frequently
 
 If you feel adventurous and want to install the latest commit from GitHub::
 
-    $ pip install -e git://github.com/bitmazk/django-requently.git#egg=package_name
+    $ pip install -e git://github.com/bitmazk/django-frequently.git#egg=frequently
 
-Add ``package_name`` to your ``INSTALLED_APPS``::
+Add ``frequently`` to your ``INSTALLED_APPS``::
 
     INSTALLED_APPS = (
         ...,
         'frequently',
     )
 
-Hook this app into your ``urls.py``::
+Add the ``frequently`` URLs to your ``urls.py``::
 
     urlpatterns = patterns('',
         ...
-        url(r'^faq/$', include('frequently.urls')),
+        url(r'^f/', include('frequently.urls')),
     )
+
+Don't forget to migrate your database::
+
+    ./manage.py migrate frequently
 
 Usage
 -----
 
-TODO: Describe usage, for example:
+Just visit the root URL of the app. Let's assume you hooked the app into your
+``urls.py`` at `f/`, then visit `yoursite.com/f/`. You will see the entry
+overview. As you can see, you can provide a form to let users submit their own
+entries @ `yoursite.com/your-question/`.
 
-* ``./manage.py syncdb --migrate``
-* ``./manage.py collectstatic``
+The entry handling is made by AJAX and jQuery, but is also functional without
+Javascript enabled.
+
+* The entries can be up- or downvoted.
+* The entries are sorted by popularity.
+* Entries can be fixed via an extra attribute.
+* The last view date and the amount of all views is tracked.
 
 Contribute
 ----------

@@ -1,4 +1,7 @@
-=== ongoing ===
+=== 0.2 (ongoing) ===
+
+* Added a better feedback admin
+* Added more statistics
 
 === 0.1 ===
 
