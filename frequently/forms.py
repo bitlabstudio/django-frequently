@@ -5,6 +5,7 @@ Forms for the ``django-frequently`` application.
 from django import forms
 from django.conf import settings
 from django.core.mail import send_mail
+from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
@@ -21,25 +22,22 @@ class EntryForm(forms.ModelForm):
 
     class Meta:
         model = Entry
-        exclude = (
-            'owner',
-            'slug',
-            'answer',
-            'category',
-            'creation_date',
-            'last_view_date',
-            'amount_of_views',
-            'upvotes',
-            'downvotes',
-            'published',
-            'fixed_position',
-        )
+        fields = ('question', )
 
     def __init__(self, owner=None, *args, **kwargs):
         self.owner = owner
         super(EntryForm, self).__init__(*args, **kwargs)
 
     def save(self, *args, **kwargs):
+        # Create unique slug
+        self.instance.slug = slugify(self.cleaned_data['name'])
+        while True:
+            try:
+                Entry.objects.get(slug=self.instance.slug)
+            except Entry.DoesNotExist:
+                break
+            else:
+                self.instance.slug = '{0}-1'.format(self.instance.slug)
         if self.owner:
             self.instance.owner = self.owner
         try:
@@ -50,12 +48,10 @@ class EntryForm(forms.ModelForm):
                 'question': self.cleaned_data['question'],
             }
             subject = render_to_string(
-                    'frequently/email/new_question_subject.txt',
-                    ctx_dict)
+                'frequently/email/new_question_subject.txt', ctx_dict)
             subject = ''.join(subject.splitlines())
             message = render_to_string(
-                    'frequently/email/new_question_body.txt',
-                    ctx_dict)
+                'frequently/email/new_question_body.txt', ctx_dict)
             to = [item[1] for item in settings.FREQUENTLY_RECIPIENTS]
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, to)
         except AttributeError:

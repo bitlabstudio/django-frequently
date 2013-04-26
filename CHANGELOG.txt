@@ -1,5 +1,7 @@
 === 0.2 (ongoing) ===
 
+* Created template tag to render a category
+* Cleaned app
 * Added a better feedback admin
 * Added more statistics
 

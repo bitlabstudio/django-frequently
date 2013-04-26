@@ -13,14 +13,16 @@ from django_libs.tests.factories import UserFactory
 class EntryCategoryFactory(factory.Factory):
     FACTORY_FOR = models.EntryCategory
 
-    name = "Entry category"
+    name = factory.Sequence(lambda n: 'Entry Category {0}'.format(n))
+    slug = factory.Sequence(lambda n: 'entry-category-{0}'.format(n))
 
 
 class EntryFactory(factory.Factory):
     FACTORY_FOR = models.Entry
 
     owner = factory.SubFactory(UserFactory)
-    question = 'How can I stop using your awesome app?'
+    question = factory.Sequence(lambda n: 'Question {0}'.format(n))
+    slug = factory.Sequence(lambda n: 'question-{0}'.format(n))
     creation_date = timezone.now()
     last_view_date = timezone.now()
     published = True

@@ -1,9 +1,5 @@
-"""
-Models for the ``django-frequently`` application.
-
-"""
+"""Models for the ``frequently`` app."""
 from django.db import models
-from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -17,9 +13,16 @@ class EntryCategory(models.Model):
     :last_rank: Last rank calculated at the category list view.
 
     """
-    name = models.CharField(max_length=100)
+    name = models.CharField(
+        max_length=100,
+        verbose_name=_('Name'),
+    )
 
-    slug = models.CharField(max_length=100)
+    slug = models.SlugField(
+        max_length=100,
+        unique=True,
+        verbose_name=_('Slug'),
+    )
 
     last_rank = models.FloatField(
         default=0,
@@ -31,10 +34,6 @@ class EntryCategory(models.Model):
 
     class Meta:
         ordering = ["name"]
-
-    def save(self, set_slug=True, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super(EntryCategory, self).save(*args, **kwargs)
 
     def get_entries(self):
         return self.entries.filter(published=True).annotate(
@@ -77,7 +76,11 @@ class Entry(models.Model):
         verbose_name=_('Question'),
     )
 
-    slug = models.CharField(max_length=200)
+    slug = models.SlugField(
+        max_length=200,
+        unique=True,
+        verbose_name=_('Slug'),
+    )
 
     answer = models.TextField(
         verbose_name=_('Answer'),
@@ -121,10 +124,6 @@ class Entry(models.Model):
 
     def __unicode__(self):
         return self.question
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.question)
-        return super(Entry, self).save(*args, **kwargs)
 
     def rating(self):
         return self.upvotes - self.downvotes

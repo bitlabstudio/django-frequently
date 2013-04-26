@@ -197,7 +197,7 @@ class EntryDetailViewTestCase(EntryPostMixin, TestCase):
         return 'frequently_entry_detail'
 
     def get_view_kwargs(self):
-        return {'pk': self.entry_1.pk, 'slug': self.entry_1.slug}
+        return {'slug': self.entry_1.slug}
 
 
 class EntryCreateViewTestCase(ViewTestMixin, TestCase):

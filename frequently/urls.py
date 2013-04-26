@@ -11,19 +11,17 @@ from frequently.views import (
 )
 
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$',
         EntryCategoryListView.as_view(),
-        name='frequently_list',
-    ),
-
-    url(r'^(?P<pk>\d+)/(?P<slug>[a-z-0-9]+)/$',
-        EntryDetailView.as_view(),
-        name='frequently_entry_detail',
-    ),
+        name='frequently_list'),
 
     url(r'^your-question/$',
         EntryCreateView.as_view(),
-        name='frequently_submit_question',
-    ),
+        name='frequently_submit_question'),
+
+    url(r'^(?P<slug>[a-z-0-9]+)/$',
+        EntryDetailView.as_view(),
+        name='frequently_entry_detail'),
 )

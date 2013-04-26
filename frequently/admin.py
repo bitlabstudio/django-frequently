@@ -4,6 +4,10 @@ from django.contrib import admin
 from frequently import models
 
 
+class EntryCategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+
+
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('entry', 'user_email', 'submission_date', 'validation')
 
@@ -15,5 +19,5 @@ class FeedbackAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Entry)
-admin.site.register(models.EntryCategory)
+admin.site.register(models.EntryCategory, EntryCategoryAdmin)
 admin.site.register(models.Feedback, FeedbackAdmin)

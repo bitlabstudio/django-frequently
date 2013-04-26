@@ -7,16 +7,7 @@
 <a href="{% url "frequently_submit_question" %}">{% trans "You can't find an answer to your issue? Submit your own! We'll help you out." %}</a>
 <div>
 {% for category in object_list %}
-    <h2>{{ category.name }}</h2>
-    {% for entry in category.get_entries %}
-        {% if entry == object %}
-            <a name="answer"></a>
-        {% endif %}
-        {% include "frequently/partials/entry.html" %}
-        {% if entry == object %}
-            {% include "frequently/partials/answer.html" %}
-        {% endif %}
-    {% endfor %}
+    {% include "frequently/partials/category.html" %}
 {% endfor %}
 </div>
 {% endblock %}
