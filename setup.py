@@ -43,9 +43,13 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'Django',
+        'Django>=1.4.5',
+        'South',
     ],
     tests_require=[
+        'fabric',
+        'factory_boy<2.0.0',
+        'django_libs',
         'django-nose',
         'coverage',
         'django-coverage',

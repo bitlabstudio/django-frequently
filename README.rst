@@ -12,9 +12,8 @@ Installation
 
 You need to install the following prerequisites in order to use this app::
 
-    pip install django==1.4.2
-    pip install South==0.7.6
-    pip install django-libs==0.8
+    pip install Django
+    pip install South
 
 
 If you want to install the latest stable release from PyPi::
@@ -58,6 +57,18 @@ Javascript enabled.
 * The entries are sorted by popularity.
 * Entries can be fixed via an extra attribute.
 * The last view date and the amount of all views is tracked.
+
+Template Tag
+============
+
+We provide a template tag to render entries of a certain category.:
+
+    {% render_category 'slug-of-the-category' %}
+
+IMPORTANT: Make sure to include the js file in this template:
+
+    <script type="text/javascript" src="{{ STATIC_URL }}frequently/js/frequently.js"></script>
+
 
 Contribute
 ----------
