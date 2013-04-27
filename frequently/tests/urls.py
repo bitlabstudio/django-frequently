@@ -18,6 +18,7 @@ urlpatterns = patterns(
     url(r'^faq/', include('frequently.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^test/$', TemplateView.as_view(template_name=('tag_test.html'))),
+    url(r'^', include('cms.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()

@@ -41,3 +41,8 @@ class FeedbackFactory(factory.Factory):
 
     submission_date = timezone.now()
     validation = 'P'
+
+
+class EntryCategoryPluginFactory(factory.Factory):
+    """Base factory for factories for ``EntryCategoryPlugin`` models."""
+    FACTORY_FOR = models.EntryCategoryPlugin

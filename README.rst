@@ -13,6 +13,7 @@ Installation
 You need to install the following prerequisites in order to use this app::
 
     pip install Django
+    pip install django-cms
     pip install South
 
 
@@ -28,6 +29,12 @@ Add ``frequently`` to your ``INSTALLED_APPS``::
 
     INSTALLED_APPS = (
         ...,
+        # django-cms related
+        'cms',
+        'mptt',
+        'menus',
+        'sekizai',
+
         'frequently',
     )
 
@@ -66,6 +73,16 @@ We provide a template tag to render entries of a certain category.:
     {% render_category 'slug-of-the-category' %}
 
 IMPORTANT: Make sure to include the js file in this template:
+
+    <script type="text/javascript" src="{{ STATIC_URL }}frequently/js/frequently.js"></script>
+
+
+CMS PLUGIN
+==========
+
+We also provide a cms plugin to render entries of a category in a django-cms placeholder.
+
+IMPORTANT: Make sure to include the js file in the cms template:
 
     <script type="text/javascript" src="{{ STATIC_URL }}frequently/js/frequently.js"></script>
 

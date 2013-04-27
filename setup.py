@@ -21,6 +21,11 @@ import os
 from setuptools import setup, find_packages
 import frequently
 
+try:
+    import multiprocessing  # NOQA
+except ImportError:
+    pass
+
 
 def read(fname):
     try:
@@ -44,6 +49,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'Django>=1.4.5',
+        'django-cms',
         'South',
     ],
     tests_require=[

@@ -2,9 +2,19 @@
 import os
 
 
+gettext = lambda s: s
+
 DEBUG = True
 USE_TZ = True
 SITE_ID = 1
+
+SECRET_KEY = 'foobar'
+
+CMS_TEMPLATES = (('cms.html', 'Standard'), )
+LANGUAGE_CODE = 'en-us'
+LANGUAGES = [
+    ('en', gettext('English')),
+]
 
 FROM_EMAIL = "info@example.com"
 DEFAULT_FROM_EMAIL = FROM_EMAIL
@@ -33,21 +43,28 @@ TEMPLATE_DIRS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.doc.XViewMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
 )
 
+
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.debug',
+    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.i18n',
+    'django.core.context_processors.request',
     'django.core.context_processors.media',
     'django.core.context_processors.static',
-    'django.core.context_processors.request',
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
+    'cms.context_processors.media',
+    'sekizai.context_processors.sekizai',
 )
 
 PASSWORD_HASHERS = (
@@ -56,8 +73,9 @@ PASSWORD_HASHERS = (
 
 COVERAGE_REPORT_HTML_OUTPUT_DIR = os.path.join(
     os.path.dirname(__file__), 'coverage')
+
 COVERAGE_MODULE_EXCLUDES = [
-    'tests$', 'settings$', 'urls$', 'locale$', 'cms_app$',
+    'tests$', 'settings$', 'urls$', 'locale$',
     'migrations', 'fixtures', 'admin$', 'django_extensions',
 ]
 
@@ -71,6 +89,12 @@ EXTERNAL_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.sites',
     'django_nose',
+
+    # django-cms related
+    'cms',
+    'mptt',
+    'menus',
+    'sekizai',
 ]
 
 INTERNAL_APPS = [

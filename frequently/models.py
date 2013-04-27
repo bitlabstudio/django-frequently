@@ -3,6 +3,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from cms.models import CMSPlugin
+
 
 class EntryCategory(models.Model):
     """
@@ -39,6 +41,22 @@ class EntryCategory(models.Model):
         return self.entries.filter(published=True).annotate(
             null_position=models.Count('fixed_position')).order_by(
                 '-null_position', 'fixed_position', '-amount_of_views')
+
+
+class EntryCategoryPlugin(CMSPlugin):
+    """
+    CMS related Model to get a group of desired categories.
+
+    :categories: Categories, which are selected by the cms user.
+
+    """
+    categories = models.ManyToManyField(
+        EntryCategory,
+        verbose_name=_('Categories'),
+    )
+
+    def copy_relations(self, oldinstance):
+        self.categories = oldinstance.categories.all()
 
 
 class Entry(models.Model):
