@@ -6,7 +6,6 @@
 
 * Added cms plugin to render a set of categories
 * Created template tag to render a category
-* Cleaned app
 * Added a better feedback admin
 * Added more statistics
 
