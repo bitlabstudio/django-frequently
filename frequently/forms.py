@@ -17,16 +17,15 @@ class EntryForm(forms.ModelForm):
     Form to submit a new entry.
 
     """
-    name = forms.CharField(max_length=100, label=_('Your Name'))
-    email = forms.EmailField()
-
     class Meta:
         model = Entry
-        fields = ('question', )
+        fields = ('question', 'submitted_by', )
 
     def __init__(self, owner=None, *args, **kwargs):
         self.owner = owner
         super(EntryForm, self).__init__(*args, **kwargs)
+        self.fields['submitted_by'].label = _('Email')
+        self.fields['submitted_by'].required = True
 
     def save(self, *args, **kwargs):
         # Create unique slug
@@ -43,8 +42,7 @@ class EntryForm(forms.ModelForm):
         try:
             settings.FREQUENTLY_RECIPIENTS
             ctx_dict = {
-                'name': self.cleaned_data['name'],
-                'email': self.cleaned_data['email'],
+                'submitted_by': self.cleaned_data['submitted_by'],
                 'question': self.cleaned_data['question'],
             }
             subject = render_to_string(

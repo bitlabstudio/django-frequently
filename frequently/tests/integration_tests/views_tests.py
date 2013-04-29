@@ -212,8 +212,7 @@ class EntryCreateViewTestCase(ViewTestMixin, TestCase):
         self.should_be_callable_when_authenticated(self.user)
         data = {
             'question': 'Foo',
-            'name': 'Bar',
-            'email': 'info@example.com',
+            'submitted_by': 'info@example.com',
         }
         resp = self.client.post(self.get_url(), data=data)
         self.assertRedirects(

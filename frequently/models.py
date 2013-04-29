@@ -140,7 +140,7 @@ class Entry(models.Model):
         verbose_name=_('is published'),
     )
 
-    submitted_by = models.CharField(
+    submitted_by = models.EmailField(
         max_length=100,
         verbose_name=_('Submitted by'),
         blank=True,
