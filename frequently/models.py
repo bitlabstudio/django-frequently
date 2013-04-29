@@ -140,6 +140,12 @@ class Entry(models.Model):
         verbose_name=_('is published'),
     )
 
+    submitted_by = models.CharField(
+        max_length=100,
+        verbose_name=_('Submitted by'),
+        blank=True,
+    )
+
     def __unicode__(self):
         return self.question
 
