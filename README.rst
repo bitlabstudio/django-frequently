@@ -13,8 +13,11 @@ Installation
 You need to install the following prerequisites in order to use this app::
 
     pip install Django
-    pip install django-cms
     pip install South
+
+If you want to use the cms app or the cms plugin please install additionally::
+
+    pip install django-cms
 
 
 If you want to install the latest stable release from PyPi::
