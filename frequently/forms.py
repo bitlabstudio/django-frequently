@@ -30,7 +30,7 @@ class EntryForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         # Create unique slug
-        self.instance.slug = slugify(self.cleaned_data['name'])
+        self.instance.slug = slugify(self.cleaned_data['question'])
         while True:
             try:
                 Entry.objects.get(slug=self.instance.slug)
