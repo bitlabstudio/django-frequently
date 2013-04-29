@@ -1,5 +1,6 @@
 {% load i18n %}
-<form class="frequentlyForm" id="ratingID{{ entry.pk }}" method="post" action=".">
+{% load url from future %}
+<form class="frequentlyForm" id="ratingID{{ entry.pk }}" method="post" action="{% url "frequently_list" %}">
     {% csrf_token %}
     {% if request.user.is_authenticated %}
         <input type="hidden" name="user_id" value="{{ request.user.id }}" />

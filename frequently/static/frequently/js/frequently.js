@@ -1,9 +1,9 @@
-function openAnswer(answerID) {
+function openAnswer(answerID, url) {
     var entry = $('#frequentlyEntry' + answerID);
     if (!entry.hasClass('frequentlyOpened')) {
         entry.addClass('frequentlyOpened');
         $.post(
-            '.',
+            url,
             {
                 "csrfmiddlewaretoken": getCSRFToken(),
                 "get_answer": answerID
@@ -42,13 +42,13 @@ function initializeForm() {
         var data = form.serializeArray();
         data.push({ name: this.name, value: this.value });
         form.find('input[type="submit"]').attr('disabled', true);
-        $.post('.', data, function(data) {
+        $.post(form.attr('action'), data, function(data) {
             form.find('input[type="submit"]').remove();
-            refreshRating(form.attr('id'));
+            refreshRating(form.attr('id'), form.attr('action'));
             form.prepend(data).find('.sendFeedback').click(function() {
                 data = form.serializeArray();
                 data.push({ name: this.name, value: this.value });
-                $.post('', data, function(data) {
+                $.post(form.attr('action'), data, function(data) {
                     form.find('.feedbackForm').remove();
                     form.prepend(data);
                 });
@@ -59,9 +59,9 @@ function initializeForm() {
     });
 }
 
-function refreshRating(ratingID) {
+function refreshRating(ratingID, url) {
     $.post(
-        '.',
+        url,
         {
             "csrfmiddlewaretoken": getCSRFToken(),
             "ratingID": ratingID
