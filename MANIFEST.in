@@ -3,5 +3,5 @@ include LICENSE
 include DESCRIPTION
 include CHANGELOG.txt
 include README.md
-recursive-include frequently *.py *.html *txt
+recursive-include frequently *.py *.html *.txt *.js
 exclude *.orig *.pyc
