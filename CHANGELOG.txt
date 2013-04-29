@@ -1,5 +1,11 @@
 === ongoing ===
 
+=== 0.2.2 ===
+
+* Re-arranged submission form
+* Save submitter's email to the database
+* Changed static files, so they can be used anywhere
+
 === 0.2.1 ===
 
 * Added *.js files to MANIFEST.in
