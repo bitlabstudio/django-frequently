@@ -1,5 +1,7 @@
 === ongoing ===
 
+=== 0.2.1 ===
+
 * Added *.js files to MANIFEST.in
 
 === 0.2 ===
