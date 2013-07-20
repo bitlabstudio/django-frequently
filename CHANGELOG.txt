@@ -1,5 +1,9 @@
 === ongoing ===
 
+=== 0.3 ===
+
+* added fixed position to category model and improved admins
+
 === 0.2.2 ===
 
 * Re-arranged submission form
