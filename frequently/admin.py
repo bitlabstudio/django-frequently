@@ -6,12 +6,14 @@ from frequently import models
 
 class EntryCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
-    list_display = ('name', 'slug')
+    list_display = ('name', 'slug', 'fixed_position')
+    list_editable = ('fixed_position', )
 
 
 class EntryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('question',)}
-    list_display = ('question', 'slug')
+    list_display = ('question', 'slug', 'fixed_position')
+    list_editable = ('fixed_position', )
 
 
 class FeedbackAdmin(admin.ModelAdmin):

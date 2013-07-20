@@ -53,7 +53,6 @@ setup(
         'South',
     ],
     tests_require=[
-        'fabric',
         'factory_boy<2.0.0',
         'django_libs',
         'django-nose',

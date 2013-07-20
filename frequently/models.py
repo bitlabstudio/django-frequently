@@ -12,6 +12,7 @@ class EntryCategory(models.Model):
 
     :name: Name or title of the category.
     :slug: Slugified name of the category.
+    :fixed_position: Set a position to avoid ordering by views.
     :last_rank: Last rank calculated at the category list view.
 
     """
@@ -26,6 +27,11 @@ class EntryCategory(models.Model):
         verbose_name=_('Slug'),
     )
 
+    fixed_position = models.PositiveIntegerField(
+        verbose_name=_('Fixed position'),
+        blank=True, null=True,
+    )
+
     last_rank = models.FloatField(
         default=0,
         verbose_name=_('Last calculated rank'),
@@ -35,12 +41,12 @@ class EntryCategory(models.Model):
         return self.name
 
     class Meta:
-        ordering = ["name"]
+        ordering = ['fixed_position', 'name']
 
     def get_entries(self):
         return self.entries.filter(published=True).annotate(
             null_position=models.Count('fixed_position')).order_by(
-                '-null_position', 'fixed_position', '-amount_of_views')
+            '-null_position', 'fixed_position', '-amount_of_views')
 
 
 class EntryCategoryPlugin(CMSPlugin):
@@ -145,6 +151,9 @@ class Entry(models.Model):
         verbose_name=_('Submitted by'),
         blank=True,
     )
+
+    class Meta:
+        ordering = ['fixed_position', 'question']
 
     def __unicode__(self):
         return self.question
