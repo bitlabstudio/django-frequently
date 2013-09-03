@@ -39,11 +39,14 @@ class EntryForm(forms.ModelForm):
                 self.instance.slug = '{0}-1'.format(self.instance.slug)
         if self.owner:
             self.instance.owner = self.owner
+
+        obj = super(EntryForm, self).save(*args, **kwargs)
         try:
             settings.FREQUENTLY_RECIPIENTS
             ctx_dict = {
                 'submitted_by': self.cleaned_data['submitted_by'],
                 'question': self.cleaned_data['question'],
+                'instance': obj,
             }
             subject = render_to_string(
                 'frequently/email/new_question_subject.txt', ctx_dict)
@@ -54,4 +57,4 @@ class EntryForm(forms.ModelForm):
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, to)
         except AttributeError:
             pass
-        return super(EntryForm, self).save(*args, **kwargs)
+        return obj

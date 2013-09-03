@@ -1,5 +1,8 @@
 === ongoing ===
 
+* Added new Entry instance to the email context so that we can point to the
+  admin URL of the new entry.
+
 === 0.3 ===
 
 * added fixed position to category model and improved admins
