@@ -1,5 +1,8 @@
 === ongoing ===
 
+- New setting: FREQUENTLY_REQUIRE_EMAIL
+- Posting a message when the question has been submitted successfully
+
 === 0.5 ===
 
 * New dependency: django-libs==1.17

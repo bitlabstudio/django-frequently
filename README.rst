@@ -80,6 +80,16 @@ Set this to ``True`` if you want to allow anonymous users to see the list view
 and to submit new questions.
 
 
+FREQUENTLY_REQUIRE_EMAIL
+++++++++++++++++++++++++
+
+Default: ``True``
+
+Set this to ``True`` in order to hide the email field on the question create
+form. This makes sense when you have set ``FREQUENTLY_ALLOW_ANONYMOUS`` to
+``False`` - in this case you already know the email address of the user.
+
+
 Template Tag
 ------------
 

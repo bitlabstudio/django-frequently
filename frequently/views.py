@@ -4,11 +4,13 @@ Views for the ``django-frequently`` application.
 """
 from math import fsum
 
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseNotFound
 from django.template.response import TemplateResponse
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, DetailView, ListView
 
 from django_libs.views_mixins import AccessMixin
@@ -214,6 +216,12 @@ class EntryCreateView(AccessMixin, CreateView):
     model = Entry
     form_class = EntryForm
     access_mixin_setting_name = 'FREQUENTLY_ALLOW_ANONYMOUS'
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS, _(
+            'Your question has been posted. Our team will review it as soon'
+            ' as possible and get back to you with an answer.'))
+        return super(EntryCreateView, self).form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super(EntryCreateView, self).get_form_kwargs()

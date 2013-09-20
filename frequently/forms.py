@@ -9,7 +9,8 @@ from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
-from frequently.models import Entry
+from . import app_settings
+from .models import Entry
 
 
 class EntryForm(forms.ModelForm):
@@ -26,6 +27,8 @@ class EntryForm(forms.ModelForm):
         super(EntryForm, self).__init__(*args, **kwargs)
         self.fields['submitted_by'].label = _('Email')
         self.fields['submitted_by'].required = True
+        if not app_settings.REQUIRE_EMAIL:
+            self.fields.pop('submitted_by')
 
     def save(self, *args, **kwargs):
         # Create unique slug
@@ -37,14 +40,19 @@ class EntryForm(forms.ModelForm):
                 break
             else:
                 self.instance.slug = '{0}-1'.format(self.instance.slug)
+
+        submitted_by = self.cleaned_data.get('submitted_by')
         if self.owner:
             self.instance.owner = self.owner
+            if not app_settings.REQUIRE_EMAIL:
+                self.instance.submitted_by = self.owner.email
+                submitted_by = self.instance.submitted_by
 
         obj = super(EntryForm, self).save(*args, **kwargs)
         try:
             settings.FREQUENTLY_RECIPIENTS
             ctx_dict = {
-                'submitted_by': self.cleaned_data['submitted_by'],
+                'submitted_by': submitted_by,
                 'question': self.cleaned_data['question'],
                 'instance': obj,
             }
