@@ -1,5 +1,7 @@
 === ongoing ===
 
+=== 0.5 ===
+
 * New dependency: django-libs==1.17
 * New setting: FREQUENTLY_ALLOW_ANONYMOUS
 
