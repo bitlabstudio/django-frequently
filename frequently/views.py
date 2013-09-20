@@ -11,8 +11,10 @@ from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.views.generic import CreateView, DetailView, ListView
 
-from frequently.forms import EntryForm
-from frequently.models import Entry, EntryCategory, Feedback
+from django_libs.views_mixins import AccessMixin
+
+from .forms import EntryForm
+from .models import Entry, EntryCategory, Feedback
 
 
 class EntryMixin(object):
@@ -153,13 +155,14 @@ class EntryMixin(object):
         return self.get(self, request, *args, **kwargs)
 
 
-class EntryCategoryListView(EntryMixin, ListView):
+class EntryCategoryListView(AccessMixin, EntryMixin, ListView):
     """
     Main view to display all categories and their entries.
 
     """
     model = EntryCategory
     template_name = "frequently/entry_list.html"
+    access_mixin_setting_name = 'FREQUENTLY_ALLOW_ANONYMOUS'
 
     def get_queryset(self):
         """
@@ -170,13 +173,14 @@ class EntryCategoryListView(EntryMixin, ListView):
         return self.get_ordered_entries(self.queryset)
 
 
-class EntryDetailView(EntryMixin, DetailView):
+class EntryDetailView(AccessMixin, EntryMixin, DetailView):
     """
     Main view to display one entry.
 
     """
     model = Entry
     template_name = "frequently/entry_list.html"
+    access_mixin_setting_name = 'FREQUENTLY_ALLOW_ANONYMOUS'
 
     def get_object(self, **kwargs):
         obj = super(EntryDetailView, self).get_object(**kwargs)
@@ -202,13 +206,14 @@ class EntryDetailView(EntryMixin, DetailView):
         return context
 
 
-class EntryCreateView(CreateView):
+class EntryCreateView(AccessMixin, CreateView):
     """
     Feedback submission form view.
 
     """
     model = Entry
     form_class = EntryForm
+    access_mixin_setting_name = 'FREQUENTLY_ALLOW_ANONYMOUS'
 
     def get_form_kwargs(self):
         kwargs = super(EntryCreateView, self).get_form_kwargs()

@@ -49,12 +49,12 @@ setup(
     include_package_data=True,
     install_requires=[
         'Django>=1.4.5',
+        'django-libs',
         'django-cms',
         'South',
     ],
     tests_require=[
         'factory_boy<2.0.0',
-        'django_libs',
         'django-nose',
         'coverage',
         'django-coverage',

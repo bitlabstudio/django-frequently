@@ -68,8 +68,20 @@ Javascript enabled.
 * Entries can be fixed via an extra attribute.
 * The last view date and the amount of all views is tracked.
 
+Settings
+--------
+
+FREQUENTLY_ALLOW_ANONYMOUS
+++++++++++++++++++++++++++
+
+Default: ``False``
+
+Set this to ``True`` if you want to allow anonymous users to see the list view
+and to submit new questions.
+
+
 Template Tag
-============
+------------
 
 We provide a template tag to render entries of a certain category.:
 
@@ -81,7 +93,7 @@ IMPORTANT: Make sure to include the js file in this template:
 
 
 CMS PLUGIN
-==========
+----------
 
 We also provide a cms plugin to render entries of a category in a django-cms placeholder.
 

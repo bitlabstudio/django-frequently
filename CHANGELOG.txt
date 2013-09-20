@@ -1,5 +1,8 @@
 === ongoing ===
 
+* New dependency: django-libs==1.17
+* New setting: FREQUENTLY_ALLOW_ANONYMOUS
+
 === 0.4 ===
 
 * Added new Entry instance to the email context so that we can point to the
