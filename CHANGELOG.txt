@@ -1,5 +1,7 @@
 === ongoing ===
 
+=== 0.6 ===
+
 - New setting: FREQUENTLY_REQUIRE_EMAIL
 - Posting a message when the question has been submitted successfully
 
