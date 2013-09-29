@@ -46,7 +46,7 @@ class EntryCategory(models.Model):
     def get_entries(self):
         return self.entries.filter(published=True).annotate(
             null_position=models.Count('fixed_position')).order_by(
-            '-null_position', 'fixed_position', '-amount_of_views')
+                '-null_position', 'fixed_position', '-amount_of_views')
 
 
 class EntryCategoryPlugin(CMSPlugin):
@@ -95,8 +95,8 @@ class Entry(models.Model):
         related_name='entries',
     )
 
-    question = models.CharField(
-        max_length=200,
+    question = models.TextField(
+        max_length=2000,
         verbose_name=_('Question'),
     )
 

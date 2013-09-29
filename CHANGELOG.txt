@@ -1,5 +1,7 @@
 === ongoing ===
 
+- Increased max_length of question field, turned it into a TextField
+
 === 0.6 ===
 
 - New setting: FREQUENTLY_REQUIRE_EMAIL
