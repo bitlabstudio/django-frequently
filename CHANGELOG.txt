@@ -1,5 +1,7 @@
 === ongoing ===
 
+- Added get_absolute_url to Entry model
+
 === 0.6.1 ===
 
 - Increased max_length of question field, turned it into a TextField

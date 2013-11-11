@@ -1,4 +1,5 @@
 """Models for the ``frequently`` app."""
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -157,6 +158,9 @@ class Entry(models.Model):
 
     def __unicode__(self):
         return self.question
+
+    def get_absolute_url(self):
+        return reverse('frequently_entry_detail', kwargs={'slug': self.slug, })
 
     def rating(self):
         return self.upvotes - self.downvotes
