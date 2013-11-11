@@ -1,5 +1,7 @@
 === ongoing ===
 
+=== 0.6.2 ===
+
 - Added get_absolute_url to Entry model
 
 === 0.6.1 ===
