@@ -50,7 +50,6 @@ setup(
     install_requires=[
         'Django>=1.4.5',
         'django-libs',
-        'django-cms',
         'South',
     ],
     tests_require=[

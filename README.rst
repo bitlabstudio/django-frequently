@@ -48,7 +48,16 @@ Add the ``frequently`` URLs to your ``urls.py``::
         url(r'^f/', include('frequently.urls')),
     )
 
-Don't forget to migrate your database::
+As of version 2 of this app, there are some significant backwards incompatible
+changes. If you are a new user, you are fine, existing users must check
+the migration docs at 
+[cmsplugin-frequently](https://github.com/bitmazk/cmsplugin-frequently). When
+you are ready to install this app, set the following setting to `True` in
+your `settings.py`::
+
+    FREQUENTLY_READY_FOR_V2 = True
+
+Now you can migrate your database::
 
     ./manage.py migrate frequently
 

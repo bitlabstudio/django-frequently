@@ -1,10 +1,9 @@
 """Models for the ``frequently`` app."""
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-
-from cms.models import CMSPlugin
 
 
 class EntryCategory(models.Model):
@@ -47,23 +46,7 @@ class EntryCategory(models.Model):
     def get_entries(self):
         return self.entries.filter(published=True).annotate(
             null_position=models.Count('fixed_position')).order_by(
-                '-null_position', 'fixed_position', '-amount_of_views')
-
-
-class EntryCategoryPlugin(CMSPlugin):
-    """
-    CMS related Model to get a group of desired categories.
-
-    :categories: Categories, which are selected by the cms user.
-
-    """
-    categories = models.ManyToManyField(
-        EntryCategory,
-        verbose_name=_('Categories'),
-    )
-
-    def copy_relations(self, oldinstance):
-        self.categories = oldinstance.categories.all()
+            '-null_position', 'fixed_position', '-amount_of_views')
 
 
 class Entry(models.Model):
@@ -209,3 +192,11 @@ class Feedback(models.Model):
 
     def __unicode__(self):
         return "%s - %s" % (self.entry, self.submission_date)
+
+
+is_ready = getattr(settings, 'FREQUENTLY_READY_FOR_V2', False)
+if not is_ready:
+    raise Exception(
+        'ERROR: There are backwards incompatible changes in django-frequently.'
+        ' Please visit http://github.com/bitmazk/cmsplugin_frequently/ to'
+        ' find out more')
