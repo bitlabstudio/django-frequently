@@ -1,5 +1,7 @@
 === ongoing ===
 
+=== 1.0 ===
+
 - BACKWARDS INCOMPATIBLE CHANGE: Removed django-cms dependencies. Please read
   https://github.com/bitmazk/cmsplugin-frequently/ on how to migrate to this
   version
