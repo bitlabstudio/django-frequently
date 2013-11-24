@@ -2,7 +2,7 @@
 import os
 
 
-FREQUENTLY_READY_FOR_V2 = True
+FREQUENTLY_READY_FOR_V1 = True
 
 
 DEBUG = True

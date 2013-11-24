@@ -1,5 +1,7 @@
 === ongoing ===
 
+- Fixed setting name
+
 === 1.0 ===
 
 - BACKWARDS INCOMPATIBLE CHANGE: Removed django-cms dependencies. Please read

@@ -194,7 +194,7 @@ class Feedback(models.Model):
         return "%s - %s" % (self.entry, self.submission_date)
 
 
-is_ready = getattr(settings, 'FREQUENTLY_READY_FOR_V2', False)
+is_ready = getattr(settings, 'FREQUENTLY_READY_FOR_V1', False)
 if not is_ready:
     raise Exception(
         'ERROR: There are backwards incompatible changes in django-frequently.'

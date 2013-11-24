@@ -55,7 +55,7 @@ the migration docs at
 you are ready to install this app, set the following setting to `True` in
 your `settings.py`::
 
-    FREQUENTLY_READY_FOR_V2 = True
+    FREQUENTLY_READY_FOR_V1 = True
 
 Now you can migrate your database::
 
