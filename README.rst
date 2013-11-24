@@ -111,16 +111,6 @@ IMPORTANT: Make sure to include the js file in this template:
     <script type="text/javascript" src="{{ STATIC_URL }}frequently/js/frequently.js"></script>
 
 
-CMS PLUGIN
-----------
-
-We also provide a cms plugin to render entries of a category in a django-cms placeholder.
-
-IMPORTANT: Make sure to include the js file in the cms template:
-
-    <script type="text/javascript" src="{{ STATIC_URL }}frequently/js/frequently.js"></script>
-
-
 Contribute
 ----------
 
