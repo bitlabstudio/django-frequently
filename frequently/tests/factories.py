@@ -10,14 +10,14 @@ from frequently import models
 from django_libs.tests.factories import UserFactory
 
 
-class EntryCategoryFactory(factory.Factory):
+class EntryCategoryFactory(factory.DjangoModelFactory):
     FACTORY_FOR = models.EntryCategory
 
     name = factory.Sequence(lambda n: 'Entry Category {0}'.format(n))
     slug = factory.Sequence(lambda n: 'entry-category-{0}'.format(n))
 
 
-class EntryFactory(factory.Factory):
+class EntryFactory(factory.DjangoModelFactory):
     FACTORY_FOR = models.Entry
 
     owner = factory.SubFactory(UserFactory)
@@ -36,7 +36,7 @@ class EntryFactory(factory.Factory):
         return item
 
 
-class FeedbackFactory(factory.Factory):
+class FeedbackFactory(factory.DjangoModelFactory):
     FACTORY_FOR = models.Feedback
 
     submission_date = timezone.now()

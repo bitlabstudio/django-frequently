@@ -53,7 +53,7 @@ setup(
         'South',
     ],
     tests_require=[
-        'factory_boy<2.0.0',
+        'factory_boy',
         'django-nose',
         'coverage',
         'django-coverage',
