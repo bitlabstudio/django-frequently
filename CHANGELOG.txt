@@ -1,5 +1,11 @@
 === ongoing ===
 
+
+=== 1.2. ===
+
+- using latest factory boy version
+
+
 === 1.1 ===
 
 - Fixed setting name
