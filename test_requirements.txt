@@ -3,3 +3,5 @@ django_libs
 django-nose
 coverage
 django-coverage
+flake8
+ipdb

@@ -116,7 +116,7 @@ class EntryMixin(object):
                     return HttpResponseNotFound()
                 if not request.session.get('rated_entries', False):
                     request.session['rated_entries'] = []
-                if not entry.pk in request.session['rated_entries']:
+                if entry.pk not in request.session['rated_entries']:
                     request.session['rated_entries'].append(entry.pk)
                     request.session.modified = True
                     self.feedback.entry = entry

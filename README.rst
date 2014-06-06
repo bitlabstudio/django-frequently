@@ -45,12 +45,12 @@ Add the ``frequently`` URLs to your ``urls.py``::
 
     urlpatterns = patterns('',
         ...
-        url(r'^f/', include('frequently.urls')),
+        url(r'^faq/', include('frequently.urls')),
     )
 
 As of version 2 of this app, there are some significant backwards incompatible
 changes. If you are a new user, you are fine, existing users must check
-the migration docs at 
+the migration docs at
 [cmsplugin-frequently](https://github.com/bitmazk/cmsplugin-frequently). When
 you are ready to install this app, set the following setting to `True` in
 your `settings.py`::

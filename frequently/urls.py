@@ -2,7 +2,7 @@
 URLs for the ``django-frequently`` application.
 
 """
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
 
 from frequently.views import (
     EntryCategoryListView,
