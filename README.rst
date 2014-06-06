@@ -94,7 +94,7 @@ FREQUENTLY_REQUIRE_EMAIL
 
 Default: ``True``
 
-Set this to ``True`` in order to hide the email field on the question create
+Set this to ``False`` in order to hide the email field on the question create
 form. This makes sense when you have set ``FREQUENTLY_ALLOW_ANONYMOUS`` to
 ``False`` - in this case you already know the email address of the user.
 
@@ -108,7 +108,7 @@ We provide a template tag to render entries of a certain category.:
 
 IMPORTANT: Make sure to include the js file in this template:
 
-    <script type="text/javascript" src="{{ STATIC_URL }}frequently/js/frequently.js"></script>
+    <script type="text/javascript" src="{% static "frequently/js/frequently.js" %}"></script>
 
 
 Contribute
