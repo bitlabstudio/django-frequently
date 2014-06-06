@@ -1,24 +1,24 @@
-function openAnswer(answerID, url) {
-    var entry = $('#frequentlyEntry' + answerID);
-    if (!entry.hasClass('frequentlyOpened')) {
-        entry.addClass('frequentlyOpened');
+function openAnswer(answer_id, url) {
+    var entry = $('[data-frequently-entry="' + answer_id + '"]');
+    if (!entry.attr('data-frequently-opened')) {
+        entry.attr('data-frequently-opened', 'true');
         $.post(
             url,
             {
                 "csrfmiddlewaretoken": getCSRFToken(),
-                "get_answer": answerID
+                "get_answer": answer_id
             },
             function(data) {
-                $(data).insertAfter('#frequentlyEntry' + answerID);
+                $(data).insertAfter('[data-frequently-entry="' + answer_id + '"]');
                 initializeForm();
             }
         );
     }
 }
 
-function hideAnswer(answerID) {
-    $('.answerID' + answerID).remove();
-    $('#frequentlyEntry' + answerID).removeClass('frequentlyOpened');
+function hideAnswer(answer_id) {
+    $('[data-answer-id="' + answer_id + '"]').remove();
+    $('[data-frequently-entry="' + answer_id + '"]').removeAttr('data-frequently-opened');
 }
 
 function getCSRFToken() {
@@ -37,19 +37,19 @@ function getCSRFToken() {
 }
 
 function initializeForm() {
-    $('.frequentlyForm input[type="submit"]').click(function() {
-        var form = $(this).closest('.frequentlyForm');
+    $('[data-class="frequently-form"] input[type="submit"]').click(function() {
+        var form = $(this).closest('[data-class="frequently-form"]');
         var data = form.serializeArray();
         data.push({ name: this.name, value: this.value });
         form.find('input[type="submit"]').attr('disabled', true);
         $.post(form.attr('action'), data, function(data) {
             form.find('input[type="submit"]').remove();
             refreshRating(form.attr('id'), form.attr('action'));
-            form.prepend(data).find('.sendFeedback').click(function() {
+            form.prepend(data).find('[data-class="send-feedback"]').click(function() {
                 data = form.serializeArray();
                 data.push({ name: this.name, value: this.value });
                 $.post(form.attr('action'), data, function(data) {
-                    form.find('.feedbackForm').remove();
+                    form.find('[data-class="feedback-form"]').remove();
                     form.prepend(data);
                 });
                 return false;
@@ -59,15 +59,15 @@ function initializeForm() {
     });
 }
 
-function refreshRating(ratingID, url) {
+function refreshRating(rating_id, url) {
     $.post(
         url,
         {
             "csrfmiddlewaretoken": getCSRFToken(),
-            "ratingID": ratingID
+            "rating_id": rating_id
         },
         function(data) {
-            $('.' + ratingID).html(data);
+            $('.' + rating_id).html(data);
         }
     );
 }

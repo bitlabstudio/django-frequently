@@ -111,7 +111,7 @@ class EntryPostMixin(ViewTestMixin):
 
     def test_rating_refresh_ajax_request(self):
         data = {
-            'ratingID': 'ratingID%s' % self.entry_1.pk,
+            'rating_id': 'rating_id%s' % self.entry_1.pk,
         }
         resp = self.client.post(
             self.get_url(),
@@ -120,7 +120,7 @@ class EntryPostMixin(ViewTestMixin):
         )
         self.assertEqual(resp.content, '%s' % self.entry_1.rating())
         data = {
-            'ratingID': 'ratingID999',
+            'rating_id': 'rating_id999',
         }
         resp = self.client.post(
             self.get_url(),
@@ -129,7 +129,7 @@ class EntryPostMixin(ViewTestMixin):
         )
         self.assertEqual(resp.status_code, 404)
         data = {
-            'ratingID': 'ratingIDXXX',
+            'rating_id': 'rating_idXXX',
         }
         resp = self.client.post(
             self.get_url(),

@@ -1,5 +1,7 @@
 === ongoing ===
 
+- Refreshed templates and js files
+
 === 1.3 ===
 
 - prepared for Django 1.6

@@ -93,10 +93,10 @@ class EntryMixin(object):
                     pass
             except ValueError:
                 pass
-        if 'ratingID' in request.POST.keys() and request.is_ajax():
+        if 'rating_id' in request.POST.keys() and request.is_ajax():
             try:
-                entry_id = int(request.POST.get('ratingID').replace(
-                    'ratingID', ''))
+                entry_id = int(request.POST.get('rating_id').replace(
+                    'rating_id', ''))
                 try:
                     entry = Entry.objects.get(pk=entry_id)
                     return HttpResponse(entry.rating())
