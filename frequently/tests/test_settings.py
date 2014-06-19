@@ -7,6 +7,7 @@ logging.getLogger("factory").setLevel(logging.WARN)
 
 
 FREQUENTLY_READY_FOR_V1 = True
+FREQUENTLY_ALLOW_ANONYMOUS = True
 
 
 DEBUG = True

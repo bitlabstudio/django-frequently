@@ -3,7 +3,7 @@
     <div data-class="feedback-form">
         <p>{% trans "Thanks for your vote. Please send a small feedback. This will be highly appreciated!" %}</p>
         <textarea name="remark"></textarea>
-        <p><input data-class="send-feedback type="submit" name="feedback{{ feedback.id }}" value="{% trans "Send feedback" %}" /></p>
+        <p><input data-class="send-feedback" type="submit" name="feedback{{ feedback.id }}" value="{% trans "Send feedback" %}" /></p>
     </div>
 {% endif %}
 {% if feedback.validation == 'P' %}
