@@ -9,8 +9,9 @@ from django.core.urlresolvers import reverse
 
 from django_libs.tests.factories import UserFactory
 from django_libs.tests.mixins import ViewTestMixin
-from frequently.models import Entry, Feedback
-from frequently.tests.factories import (
+
+from ..models import Entry, Feedback
+from ..tests.factories import (
     EntryFactory,
     EntryCategoryFactory,
     FeedbackFactory,

@@ -195,7 +195,7 @@ class Feedback(models.Model):
 
 
 is_ready = getattr(settings, 'FREQUENTLY_READY_FOR_V1', False)
-if not is_ready:
+if not is_ready:  # pragma: nocover
     raise Exception(
         'ERROR: There are backwards incompatible changes in django-frequently.'
         ' Please visit http://github.com/bitmazk/cmsplugin-frequently/ to'

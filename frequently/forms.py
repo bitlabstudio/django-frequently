@@ -9,7 +9,6 @@ from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
-from . import app_settings
 from .models import Entry
 
 
@@ -27,12 +26,12 @@ class EntryForm(forms.ModelForm):
         super(EntryForm, self).__init__(*args, **kwargs)
         self.fields['submitted_by'].label = _('Email')
         self.fields['submitted_by'].required = True
-        if not app_settings.REQUIRE_EMAIL:
+        if not getattr(settings, 'FREQUENTLY_REQUIRE_EMAIL', True):
             self.fields.pop('submitted_by')
 
     def save(self, *args, **kwargs):
         # Create unique slug
-        self.instance.slug = slugify(self.cleaned_data['question'])
+        self.instance.slug = slugify(self.cleaned_data['question'])[:100]
         while True:
             try:
                 Entry.objects.get(slug=self.instance.slug)
@@ -44,7 +43,7 @@ class EntryForm(forms.ModelForm):
         submitted_by = self.cleaned_data.get('submitted_by')
         if self.owner:
             self.instance.owner = self.owner
-            if not app_settings.REQUIRE_EMAIL:
+            if not getattr(settings, 'FREQUENTLY_REQUIRE_EMAIL', True):
                 self.instance.submitted_by = self.owner.email
                 submitted_by = self.instance.submitted_by
 
