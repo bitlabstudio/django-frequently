@@ -1,7 +1,8 @@
 """Tests for the tags of the ``frequently`` app."""
 from django.test import TestCase
 
-from .factories import EntryCategoryFactory
+from mixer.backend.django import mixer
+
 from ..templatetags.frequently_tags import render_category
 
 
@@ -10,7 +11,7 @@ class RenderCategoryTestCase(TestCase):
     longMessage = True
 
     def setUp(self):
-        self.category = EntryCategoryFactory()
+        self.category = mixer.blend('frequently.EntryCategory')
 
     def test_tag(self):
         self.assertEqual(render_category(self.category.slug),

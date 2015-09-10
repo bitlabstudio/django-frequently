@@ -12,8 +12,7 @@ Installation
 
 You need to install the following prerequisites in order to use this app::
 
-    pip install Django
-    pip install South
+    pip install Django>=1.8
 
 If you want to use the cms app or the cms plugin please install additionally::
 
@@ -119,8 +118,8 @@ If you want to contribute to this project, please perform the following steps::
     # Fork this repository
     # Clone your fork
     $ mkvirtualenv -p python2.7 django-frequently
-    $ pip install -r requirements.txt
-    $ ./frequently/tests/runtests.sh
+    $ pip install -r test_requirements.txt
+    $ python setup.py test
     # You should get no failing tests
 
     $ git co -b feature_branch master

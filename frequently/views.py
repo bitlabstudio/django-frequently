@@ -7,7 +7,7 @@ from math import fsum
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, Http404
 from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -101,9 +101,9 @@ class EntryMixin(object):
                     entry = Entry.objects.get(pk=entry_id)
                     return HttpResponse(entry.rating())
                 except Entry.DoesNotExist:
-                    return HttpResponseNotFound()
+                    raise Http404
             except ValueError:
-                return HttpResponseNotFound()
+                raise Http404
         for key in request.POST.keys():
             if key.startswith('up') or key.startswith('down'):
                 try:
@@ -111,9 +111,9 @@ class EntryMixin(object):
                     try:
                         entry = Entry.objects.get(pk=entry_id)
                     except Entry.DoesNotExist:
-                        return HttpResponseNotFound()
+                        raise Http404
                 except ValueError:
-                    return HttpResponseNotFound()
+                    raise Http404
                 if not request.session.get('rated_entries', False):
                     request.session['rated_entries'] = []
                 if entry.pk not in request.session['rated_entries']:
@@ -143,9 +143,9 @@ class EntryMixin(object):
                     try:
                         self.feedback = Feedback.objects.get(pk=feedback_id)
                     except Feedback.DoesNotExist:
-                        return HttpResponseNotFound()
+                        raise Http404
                 except ValueError:
-                    return HttpResponseNotFound()
+                    raise Http404
                 self.feedback.remark = request.POST.get("remark")
                 self.feedback.save()
                 if request.is_ajax():
@@ -197,7 +197,7 @@ class EntryDetailView(AccessMixin, EntryMixin, DetailView):
             'rated_entries': self.request.session.get('rated_entries', False),
             'object_list': self.get_ordered_entries(),
         })
-        for key in self.request.POST.keys():
+        for key in self.request.POST.keys():  # pragma: nocover
             if key.startswith('down') or key.startswith('up'):
                 context.update({
                     'feedback_entry': int(

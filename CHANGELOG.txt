@@ -1,5 +1,8 @@
 === ongoing ===
 
+- prepared app for Django 1.8
+- moved from factory_boy to mixer
+
 == 1.3.2 ===
 
 - brought coverage back to 100%

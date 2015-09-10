@@ -48,12 +48,10 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'Django>=1.6.1',
+        'Django>=1.8',
         'django-libs',
-        'South',
     ],
     tests_require=[
-        'factory_boy',
         'django-nose',
         'coverage',
         'django-coverage',

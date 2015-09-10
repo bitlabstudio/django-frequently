@@ -1,7 +1,7 @@
 """Tests for the forms of the ``django-frequently`` app."""
 from django.test import TestCase
 
-from django_libs.tests.factories import UserFactory
+from mixer.backend.django import mixer
 
 from .. import forms
 
@@ -9,7 +9,7 @@ from .. import forms
 class EntryFormTestCase(TestCase):
     """Tests for the ``EntryForm`` form class."""
     def setUp(self):
-        self.owner = UserFactory()
+        self.owner = mixer.blend('auth.User')
 
     def test_form(self):
         data = {

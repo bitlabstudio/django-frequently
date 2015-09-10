@@ -2,7 +2,6 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -96,12 +95,12 @@ class Entry(models.Model):
     )
 
     creation_date = models.DateTimeField(
-        default=timezone.now(),
+        auto_now_add=True,
         verbose_name=_('Creation date'),
     )
 
     last_view_date = models.DateTimeField(
-        default=timezone.now(),
+        auto_now_add=True,
         verbose_name=_('Date of last view'),
     )
 
@@ -180,7 +179,7 @@ class Feedback(models.Model):
     )
 
     submission_date = models.DateTimeField(
-        default=timezone.now(),
+        auto_now_add=True,
         verbose_name=_('Submission date'),
     )
 
