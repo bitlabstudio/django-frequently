@@ -4,6 +4,8 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from ckeditor.fields import RichTextField
+
 
 class EntryCategory(models.Model):
     """
@@ -89,9 +91,9 @@ class Entry(models.Model):
         verbose_name=_('Slug'),
     )
 
-    answer = models.TextField(
+    answer = RichTextField(
         verbose_name=_('Answer'),
-        blank=True, null=True,
+        blank=True,
     )
 
     creation_date = models.DateTimeField(

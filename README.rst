@@ -37,6 +37,7 @@ Add ``frequently`` to your ``INSTALLED_APPS``::
         'menus',
         'sekizai',
 
+        'ckeditor',
         'frequently',
     )
 

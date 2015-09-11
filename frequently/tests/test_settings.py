@@ -48,6 +48,7 @@ COVERAGE_MODULE_EXCLUDES = [
 ]
 
 EXTERNAL_APPS = [
+    'ckeditor',
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.auth',
@@ -78,3 +79,18 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # App specific settings
 FREQUENTLY_READY_FOR_V1 = True
 FREQUENTLY_ALLOW_ANONYMOUS = True
+
+# ckeditor settings
+CKEDITOR_UPLOAD_PATH = 'ckeditor_uploads/'
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+CKEDITOR_JQUERY_URL = \
+    '//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [{
+            'name': 'basic',
+            'items': ['Bold', 'Italic', 'Underline', 'RemoveFormat', '-',
+                      'PasteText', 'Undo', 'Redo', 'Format', 'Source', ],
+        }],
+    },
+}

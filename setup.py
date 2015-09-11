@@ -48,8 +48,9 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'Django>=1.8',
+        'Django',
         'django-libs',
+        'django-ckeditor',
     ],
     tests_require=[
         'django-nose',
