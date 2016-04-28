@@ -2,11 +2,13 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from ckeditor.fields import RichTextField
 
 
+@python_2_unicode_compatible
 class EntryCategory(models.Model):
     """
     Model to gather answers in topic groups.
@@ -38,7 +40,7 @@ class EntryCategory(models.Model):
         verbose_name=_('Last calculated rank'),
     )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -50,6 +52,7 @@ class EntryCategory(models.Model):
             '-null_position', 'fixed_position', '-amount_of_views')
 
 
+@python_2_unicode_compatible
 class Entry(models.Model):
     """
     Entry model. Can be added to a category group.
@@ -140,7 +143,7 @@ class Entry(models.Model):
     class Meta:
         ordering = ['fixed_position', 'question']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.question
 
     def get_absolute_url(self):
@@ -150,6 +153,7 @@ class Entry(models.Model):
         return self.upvotes - self.downvotes
 
 
+@python_2_unicode_compatible
 class Feedback(models.Model):
     """
     Feedback model to save and store user feedback related to an entry.
@@ -191,7 +195,7 @@ class Feedback(models.Model):
         verbose_name=_('Validation mood'),
     )
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s - %s" % (self.entry, self.submission_date)
 
 

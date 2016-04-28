@@ -1,4 +1,4 @@
-{% load i18n %}{% load url from future %}
+{% load i18n %}
 {% trans "Hello" %},
 {% trans "please take a look at the following recently submitted question:" %}
 

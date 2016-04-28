@@ -1,27 +1,19 @@
-"""
-URLs for the ``django-frequently`` application.
+"""URLs for the ``django-frequently`` application."""
+from django.conf.urls import url
 
-"""
-from django.conf.urls import patterns, url
-
-from frequently.views import (
-    EntryCategoryListView,
-    EntryCreateView,
-    EntryDetailView,
-)
+from . import views
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^$',
-        EntryCategoryListView.as_view(),
+        views.EntryCategoryListView.as_view(),
         name='frequently_list'),
 
     url(r'^your-question/$',
-        EntryCreateView.as_view(),
+        views.EntryCreateView.as_view(),
         name='frequently_submit_question'),
 
     url(r'^(?P<slug>[a-z-0-9]+)/$',
-        EntryDetailView.as_view(),
+        views.EntryDetailView.as_view(),
         name='frequently_entry_detail'),
-)
+]

@@ -5,14 +5,12 @@ A Django application that can be used as a FAQ, a Q&A, for general
 announcements or as a miniblog. There are a lot of functions to increase the
 user experience, like sorting by popularity, statistics and ratings.
 
-This is an early alpha. Use it with caution.
-
 Installation
 ------------
 
 You need to install the following prerequisites in order to use this app::
 
-    pip install Django>=1.8
+    pip install Django
 
 If you want to use the cms app or the cms plugin please install additionally::
 
@@ -33,9 +31,8 @@ Add ``frequently`` to your ``INSTALLED_APPS``::
         ...,
         # django-cms related
         'cms',
-        'mptt',
+        'treebeard',
         'menus',
-        'sekizai',
 
         'ckeditor',
         'frequently',
@@ -43,10 +40,9 @@ Add ``frequently`` to your ``INSTALLED_APPS``::
 
 Add the ``frequently`` URLs to your ``urls.py``::
 
-    urlpatterns = patterns('',
-        ...
+    urlpatterns = [
         url(r'^faq/', include('frequently.urls')),
-    )
+    ]
 
 As of version 2 of this app, there are some significant backwards incompatible
 changes. If you are a new user, you are fine, existing users must check

@@ -21,11 +21,6 @@ import os
 from setuptools import setup, find_packages
 import frequently
 
-try:
-    import multiprocessing  # NOQA
-except ImportError:
-    pass
-
 
 def read(fname):
     try:
@@ -52,10 +47,4 @@ setup(
         'django-libs',
         'django-ckeditor',
     ],
-    tests_require=[
-        'django-nose',
-        'coverage',
-        'django-coverage',
-    ],
-    test_suite='frequently.tests.runtests.runtests',
 )

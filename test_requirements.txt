@@ -1,10 +1,6 @@
-django
 mixer
-django_libs
--e git+git://github.com/pinax/django-mailer.git@919805e25fc18b06487b25414d4e5d5e05a92108#egg=mailer
-django-nose
 coverage
-django-coverage
 flake8
 ipdb
-fabric
+fabric3
+tox

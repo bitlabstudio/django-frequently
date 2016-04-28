@@ -97,7 +97,7 @@ class EntryPostMixin(ViewRequestFactoryTestMixin):
             'rating_id': 'rating_id{}'.format(self.entry_1.pk),
         }
         resp = self.is_postable(data=data, ajax=True)
-        self.assertEqual(resp.content, '%s' % self.entry_1.rating())
+        self.assertEqual(int(resp.content), self.entry_1.rating())
         self.is_not_callable(post=True, data={'rating_id': 'rating_idXXX'},
                              ajax=True)
         self.is_not_callable(post=True, data={'rating_id': 'rating_id999'},
