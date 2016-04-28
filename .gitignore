@@ -4,4 +4,4 @@
 db.sqlite
 dist/
 docs/build/
-frequently/tests/coverage/
+*coverage/
