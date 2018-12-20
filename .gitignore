@@ -1,6 +1,7 @@
 *.egg-info/
 *.pyc
 /media/
+build/
 db.sqlite
 dist/
 docs/build/
