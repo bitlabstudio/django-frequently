@@ -4,7 +4,7 @@ As you know, every app must be hooked into yout main ``urls.py`` so that
 you can actually reach the app's views (provided it has any views, of course).
 
 """
-from django.conf.urls import include, url
+from django.urls import include, path
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import TemplateView
@@ -14,9 +14,9 @@ admin.autodiscover()
 
 
 urlpatterns = [
-    url(r'^faq/', include('frequently.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^test/$', TemplateView.as_view(template_name=('tag_test.html'))),
+    path(r'^admin/', admin.site.urls),
+    path(r'^faq/', include('frequently.urls')),
+    path(r'^test/$', TemplateView.as_view(template_name=('tag_test.html'))),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

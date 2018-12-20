@@ -1,7 +1,7 @@
 """Models for the ``frequently`` app."""
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.db import models
+from django.urls import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
@@ -75,6 +75,7 @@ class Entry(models.Model):
         'auth.User',
         verbose_name=_('Owner'),
         blank=True, null=True,
+        on_delete=models.SET_NULL,
     )
 
     category = models.ManyToManyField(
@@ -171,12 +172,14 @@ class Feedback(models.Model):
         'auth.User',
         verbose_name=_('User'),
         blank=True, null=True,
+        on_delete=models.SET_NULL,
     )
 
     entry = models.ForeignKey(
         Entry,
         verbose_name=_('Related entry'),
         blank=True, null=True,
+        on_delete=models.CASCADE,
     )
 
     remark = models.TextField(

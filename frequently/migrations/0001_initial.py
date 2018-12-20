@@ -53,8 +53,8 @@ class Migration(migrations.Migration):
                 ('remark', models.TextField(verbose_name='Remark', blank=True)),
                 ('submission_date', models.DateTimeField(auto_now_add=True, verbose_name='Submission date')),
                 ('validation', models.CharField(max_length=1, verbose_name='Validation mood', choices=[(b'P', 'Positive'), (b'N', 'Negative')])),
-                ('entry', models.ForeignKey(verbose_name='Related entry', blank=True, to='frequently.Entry', null=True)),
-                ('user', models.ForeignKey(verbose_name='User', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('entry', models.ForeignKey(verbose_name='Related entry', blank=True, to='frequently.Entry', null=True, on_delete=models.CASCADE)),
+                ('user', models.ForeignKey(verbose_name='User', blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)),
             ],
         ),
         migrations.AddField(
@@ -65,6 +65,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='entry',
             name='owner',
-            field=models.ForeignKey(verbose_name='Owner', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(verbose_name='Owner', blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL),
         ),
     ]
